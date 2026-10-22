@@ -250,22 +250,42 @@ function resolveOfflineHeuristic(query: string): {
     };
   }
 
-  // 3. Amazon Pharmacy refill intent (orderRefill)
+  // 4. Autonomous PayPal Agentic Commerce Refill Intent (orderRefill)
   const isRefillIntent =
     lower.includes('refill') ||
     lower.includes('reorder') ||
     lower.includes('re-order') ||
     lower.includes('order') ||
     lower.includes('buy') ||
+    lower.includes('purchase') ||
+    lower.includes('paypal') ||
     lower.includes('out of') ||
     lower.includes('running low');
 
   if (isRefillIntent) {
     let medicineName = 'Atorvastatin';
-    if (lower.includes('amlodipine')) medicineName = 'Amlodipine';
-    else if (lower.includes('metformin')) medicineName = 'Metformin';
-    else if (lower.includes('aspirin')) medicineName = 'Aspirin';
-    else if (lower.includes('atorvastatin') || lower.includes('lipitor')) medicineName = 'Atorvastatin';
+    if (
+      lower.includes('amlodipine') ||
+      lower.includes('norvasc') ||
+      lower.includes('blood pressure') ||
+      lower.includes('bp')
+    ) {
+      medicineName = 'Amlodipine';
+    } else if (
+      lower.includes('metformin') ||
+      lower.includes('sugar') ||
+      lower.includes('diabetes')
+    ) {
+      medicineName = 'Metformin';
+    } else if (lower.includes('aspirin')) {
+      medicineName = 'Aspirin';
+    } else if (
+      lower.includes('atorvastatin') ||
+      lower.includes('lipitor') ||
+      lower.includes('cholesterol')
+    ) {
+      medicineName = 'Atorvastatin';
+    }
 
     let quantity = 30;
     const explicitPillMatch = query.match(/\b(\d{1,3})\s*(?:tablets|pills|capsules|tabs|doses)\b/i);
@@ -288,7 +308,7 @@ function resolveOfflineHeuristic(query: string): {
     };
   }
 
-  // 4. Biometric vitals recording intent (recordVitals)
+  // 5. Biometric vitals recording intent (recordVitals)
   const isVitalsIntent =
     lower.includes('blood pressure') ||
     lower.includes('bp') ||
@@ -346,7 +366,7 @@ function resolveOfflineHeuristic(query: string): {
     };
   }
 
-  // 5. Clinical symptoms, safety concerns, or health queries (clinicalAdvisor)
+  // 6. Clinical symptoms, safety concerns, or health queries (clinicalAdvisor)
   const isClinicalIntent =
     lower.includes('dizzy') ||
     lower.includes('dizziness') ||
@@ -386,7 +406,7 @@ function resolveOfflineHeuristic(query: string): {
     };
   }
 
-  // 6. Ring smart ecosystem intent (Ring Doorbell Pro / Smart Lock)
+  // 7. Ring smart ecosystem intent (Ring Doorbell Pro / Smart Lock)
   const isRingIntent =
     lower.includes('ring') ||
     lower.includes('doorbell') ||
@@ -458,7 +478,7 @@ async function executeTool(
     }
     case 'orderRefill': {
       toolResult = await orderRefillTool.handler(toolArgs as any);
-      speechResponse = toolResult.speechText || 'Your Amazon Pharmacy refill order has been placed.';
+      speechResponse = toolResult.speechText || 'Your prescription refill order has been placed with PayPal.';
       break;
     }
     case 'ringDeviceHub': {
@@ -519,7 +539,7 @@ export async function handleAgentTurn(req: AgentTurnRequest): Promise<AgentTurnR
         toolArgs,
         toolResult,
         speechResponse:
-          toolName === 'negotiateAdherence'
+          toolName === 'negotiateAdherence' || toolName === 'orderRefill'
             ? speechResponse
             : (decision.textResponse || speechResponse),
         offlineFallbackUsed: false,
