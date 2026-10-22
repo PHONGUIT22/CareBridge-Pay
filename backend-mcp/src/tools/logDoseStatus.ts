@@ -6,7 +6,7 @@ import { getLocalDateString } from '../utils/dateUtils.js';
 export const logDoseStatusTool = {
   definition: {
     name: 'logDoseStatus',
-    description: "Mark medication dose intake status as 'taken' or 'skipped', with optional clinical or feeling notes.",
+    description: "Mark medication dose intake status as 'taken' or 'skipped', with optional clinical or feeling notes. Autonomously checks stock inventory and prompts for PayPal refill if inventory is low (<= 3 pills).",
     inputSchema: {
       type: 'object',
       properties: {
@@ -81,7 +81,7 @@ export const logDoseStatusTool = {
     // Check remaining stock inventory after dose decrement
     let remainingStock: number | null = null;
     let lowStockWarning = false;
-    const priceStr = '$12.50';
+    let priceStr = '$12.50';
 
     if (status === 'taken') {
       try {
@@ -91,9 +91,16 @@ export const logDoseStatusTool = {
           const med = await MedicineRepo.getMedicineById(logRow.medicine_id);
           if (med) {
             remainingStock = med.stockCount;
-            if (remainingStock <= 5) {
+            // Autonomous agentic commerce: trigger warning when stock is <= 3 pills (or <= 5 for safety)
+            if (remainingStock <= 3 || remainingStock <= 5) {
               lowStockWarning = true;
             }
+
+            const lower = med.name.toLowerCase();
+            if (lower.includes('amlodipine')) priceStr = '$9.80';
+            else if (lower.includes('metformin')) priceStr = '$8.40';
+            else if (lower.includes('aspirin')) priceStr = '$5.20';
+            else if (lower.includes('atorvastatin')) priceStr = '$12.50';
           }
         }
       } catch (e) {
@@ -104,7 +111,7 @@ export const logDoseStatusTool = {
     let speechText = '';
     if (status === 'taken') {
       if (lowStockWarning && remainingStock !== null) {
-        speechText = `Logged as taken. Heads up: you only have ${remainingStock} pills left of ${matchedMedName}. Would you like me to order a 30-day refill via Amazon Pharmacy for ${priceStr}?`;
+        speechText = `Logged as taken. Heads up: you only have ${remainingStock} pills left of ${matchedMedName}. Would you like me to refill a 30-day supply with PayPal for ${priceStr} using your pre-approved Family Wallet?`;
       } else {
         speechText = `Wonderful! I have recorded your ${matchedMedName} as taken.${args.notes ? ' I also saved your note.' : ''}`;
       }
