@@ -29,8 +29,17 @@ export function initDB(): DatabaseType {
     // verbose: console.log, // Enable for detailed SQL query logging
   });
 
-  // Enable WAL mode and foreign key constraints
-  dbInstance.pragma('journal_mode = WAL');
+  // Enable WAL mode, busy timeout, and foreign key constraints
+  try {
+    dbInstance.pragma('journal_mode = WAL');
+  } catch (e) {
+    try {
+      dbInstance.pragma('journal_mode = DELETE');
+    } catch {
+      // Ignore fallback pragma failure
+    }
+  }
+  dbInstance.pragma('busy_timeout = 5000');
   dbInstance.pragma('foreign_keys = ON');
   dbInstance.pragma('synchronous = NORMAL'); // Optimize disk write safety for WAL
 
@@ -47,6 +56,10 @@ export function initDB(): DatabaseType {
       patient_name TEXT,
       patient_age INTEGER,
       is_onboarded INTEGER DEFAULT 0,
+      monthly_wallet_limit REAL DEFAULT 50.0,
+      monthly_wallet_spent REAL DEFAULT 0.0,
+      paypal_vault_id TEXT,
+      caregiver_email TEXT,
       created_at TEXT NOT NULL
     );
 
@@ -96,6 +109,24 @@ export function initDB(): DatabaseType {
       email TEXT NOT NULL,
       updated_at TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS transactions (
+      id TEXT PRIMARY KEY NOT NULL,
+      user_id TEXT,
+      order_id TEXT,
+      paypal_capture_id TEXT,
+      medicine_name TEXT,
+      quantity INTEGER DEFAULT 30,
+      amount REAL NOT NULL,
+      currency TEXT DEFAULT 'USD',
+      status TEXT NOT NULL,
+      type TEXT DEFAULT 'refill',
+      payer_email TEXT,
+      invoice_url TEXT,
+      created_at TEXT NOT NULL,
+      updated_at TEXT NOT NULL,
+      FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    );
   `);
 
   // Defensive migration: ensure newer columns exist safely
@@ -103,11 +134,15 @@ export function initDB(): DatabaseType {
   migrateTableSafely('users', 'patient_name', 'TEXT');
   migrateTableSafely('users', 'patient_age', 'INTEGER');
   migrateTableSafely('users', 'is_onboarded', 'INTEGER DEFAULT 0');
+  migrateTableSafely('users', 'monthly_wallet_limit', 'REAL DEFAULT 50.0');
+  migrateTableSafely('users', 'monthly_wallet_spent', 'REAL DEFAULT 0.0');
+  migrateTableSafely('users', 'paypal_vault_id', 'TEXT');
+  migrateTableSafely('users', 'caregiver_email', 'TEXT');
 
   // Ensure default demo user exists in users table for existing records
   dbInstance.prepare(`
-    INSERT OR IGNORE INTO users (id, email, pin, role, is_pro, is_demo, caregiver_name, patient_name, patient_age, is_onboarded, created_at)
-    VALUES ('usr_demo', 'demo@gmail.com', '1234', 'caregiver', 1, 1, 'Sarah Connor', 'Eleanor Vance', 78, 1, ?)
+    INSERT OR IGNORE INTO users (id, email, pin, role, is_pro, is_demo, caregiver_name, patient_name, patient_age, is_onboarded, monthly_wallet_limit, monthly_wallet_spent, paypal_vault_id, caregiver_email, created_at)
+    VALUES ('usr_demo', 'demo@gmail.com', '1234', 'caregiver', 1, 1, 'Sarah Connor', 'Eleanor Vance', 78, 1, 50.0, 0.0, 'VAULT-DEMO-FAMILY-WALLET', 'sarah@carebridge.ai', ?)
   `).run(new Date().toISOString());
 
   // Ensure demo user has predefined profile populated
@@ -117,7 +152,11 @@ export function initDB(): DatabaseType {
       SET caregiver_name = 'Sarah Connor', 
           patient_name = 'Eleanor Vance', 
           patient_age = 78, 
-          is_onboarded = 1 
+          is_onboarded = 1,
+          monthly_wallet_limit = COALESCE(monthly_wallet_limit, 50.0),
+          monthly_wallet_spent = COALESCE(monthly_wallet_spent, 0.0),
+          paypal_vault_id = COALESCE(paypal_vault_id, 'VAULT-DEMO-FAMILY-WALLET'),
+          caregiver_email = COALESCE(caregiver_email, 'sarah@carebridge.ai')
       WHERE id = 'usr_demo' OR email = 'demo@gmail.com';
     `);
   } catch (err) {
@@ -169,12 +208,14 @@ export function initDB(): DatabaseType {
     // Ignore if column doesn't exist yet
   }
 
-  // Optimize indexes for multi-user schedule queries and adherence heatmaps
+  // Optimize indexes for multi-user schedule queries, adherence heatmaps, and financial ledger
   dbInstance.exec(`
     CREATE INDEX IF NOT EXISTS idx_log_date ON intake_logs(date);
     CREATE INDEX IF NOT EXISTS idx_log_user_date ON intake_logs(user_id, date);
     CREATE INDEX IF NOT EXISTS idx_medicines_user ON medicines(user_id);
     CREATE INDEX IF NOT EXISTS idx_vitals_user_date ON daily_vitals(user_id, date);
+    CREATE INDEX IF NOT EXISTS idx_transactions_user_created ON transactions(user_id, created_at);
+    CREATE INDEX IF NOT EXISTS idx_transactions_order_id ON transactions(order_id);
   `);
 
   console.log(`[SQLite] Database successfully connected at: ${DB_PATH}`);
@@ -228,4 +269,4 @@ process.on('SIGINT', () => {
 process.on('SIGTERM', () => {
   closeDB();
   process.exit(0);
-});
+});
