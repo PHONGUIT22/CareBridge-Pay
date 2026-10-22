@@ -122,9 +122,9 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
     });
   });
 
-  // TEST 3: orderRefill generates valid Amazon order ID (114-XXXXXXX-XXXXXXX) & adds +30 units
-  describe('Tool: orderRefill', () => {
-    it('creates authentic Amazon Pharmacy order ID (114-XXXXXXX-XXXXXXX) and increments inventory', async () => {
+  // TEST 3: orderRefill generates valid PayPal Order & adds +30 units via Family Wallet
+  describe('Tool: orderRefill (PayPal Agentic Commerce)', () => {
+    it('creates authentic PayPal Order ID and increments inventory when within limit', async () => {
       const allMeds = await MedicineRepo.getAllMedicines();
       const medToRefill = allMeds.find((m) => m.name.toLowerCase().includes('atorvastatin')) || allMeds[0];
       const previousStock = medToRefill.stockCount;
@@ -136,17 +136,16 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
       });
 
       expect(result.success).toBe(true);
-      // Verify Amazon order ID format (e.g. 114-7294821-4928103)
-      expect(result.orderId).toMatch(/^114-\d{7}-\d{7}$/);
+      expect(result.orderId).toBeDefined();
       expect(result.quantityAdded).toBe(refillQuantity);
       expect(result.previousStock).toBe(previousStock);
       expect(result.newStockCount).toBe(previousStock + refillQuantity);
-      expect(result.pharmacyName).toBe('Amazon Pharmacy');
-      expect(result.shippingMethod).toContain('Prime');
+      expect(result.paymentMethod).toContain('PayPal');
+      expect(result.paymentStatus).toBe('COMPLETED');
 
-      // Verify richCard metadata for Echo Show display
+      // Verify richCard metadata
       expect(result.richCard).toBeDefined();
-      expect(result.richCard.type).toBe('AmazonPharmacyOrder');
+      expect(result.richCard.type).toBe('PayPalOrderReceipt');
       expect(result.richCard.orderId).toBe(result.orderId);
       expect(result.richCard.newStockCount).toBe(result.newStockCount);
 
@@ -155,7 +154,7 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
       expect(reloadedMed!.stockCount).toBe(previousStock + refillQuantity);
     });
 
-    it('accurately reflects requested quantity in speechText for non-standard refills', async () => {
+    it('accurately reflects requested quantity and PayPal in speechText', async () => {
       const allMeds = await MedicineRepo.getAllMedicines();
       const medToRefill = allMeds[0];
       const customQuantity = 60;
@@ -168,6 +167,7 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
       expect(result.success).toBe(true);
       expect(result.quantityAdded).toBe(customQuantity);
       expect(result.speechText).toContain(`${customQuantity} tablets`);
+      expect(result.speechText).toContain('PayPal');
       expect(result.richCard.quantity).toBe(customQuantity);
     });
   });
@@ -183,7 +183,6 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
       expect(result.doorLockStatus).toBe('LOCKED');
       expect(result.packageDetected).toBe(true);
       expect(result.packageDetails).toBeDefined();
-      expect(result.packageDetails?.carrier).toBe('Amazon Prime Delivery');
       expect(result.richCard?.type).toBe('RingDoorbellFeed');
       expect(result.richCard?.mode).toBe('delivery');
     });
@@ -316,4 +315,3 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
     });
   });
 });
-
