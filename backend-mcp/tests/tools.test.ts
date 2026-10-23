@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest';
+import { describe, it, expect, beforeAll, beforeEach } from 'vitest';
 import { initDB } from '../src/database/db.js';
 import { seedDemoData } from '../src/database/seedDemoData.js';
 import { MedicineRepo } from '../src/database/medicineRepo.js';
@@ -124,6 +124,9 @@ describe('CareBridge Ambient Core MCP Tools Suite', () => {
 
   // TEST 3: orderRefill generates valid PayPal Order & adds +30 units via Family Wallet
   describe('Tool: orderRefill (PayPal Agentic Commerce)', () => {
+    beforeEach(async () => {
+      await seedDemoData('usr_demo', true);
+    });
     it('creates authentic PayPal Order ID and increments inventory when within limit', async () => {
       const allMeds = await MedicineRepo.getAllMedicines();
       const medToRefill = allMeds.find((m) => m.name.toLowerCase().includes('atorvastatin')) || allMeds[0];

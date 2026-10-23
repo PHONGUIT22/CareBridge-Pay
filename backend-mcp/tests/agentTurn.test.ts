@@ -37,6 +37,7 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
 
   // TEST 3: Intent analysis for prescription refill via PayPal Platform -> orderRefill
   it('dispatches orderRefill tool when patient requests a prescription refill', async () => {
+    await seedDemoData('usr_demo', true);
     const response = await handleAgentTurn({
       query: 'I am running out of Lipitor, please order a refill for me',
     });
@@ -50,6 +51,7 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
   });
 
   it('dispatches orderRefill tool with extracted custom quantity when patient requests 60 tablets', async () => {
+    await seedDemoData('usr_demo', true);
     const response = await handleAgentTurn({
       query: 'Alexa, order 60 pills of Metformin with PayPal',
     });
@@ -60,6 +62,19 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
     expect(response.toolResult?.quantityAdded).toBe(60);
     expect(response.speechResponse).toContain('60 tablets');
     expect(response.speechResponse).toContain('PayPal');
+  });
+
+  it('dispatches orderRefill tool with 180 tablets for 90-day Metformin query triggering caregiver invoice', async () => {
+    await seedDemoData('usr_demo', true);
+    const response = await handleAgentTurn({
+      query: 'Order 90 days of Metformin with express shipping.',
+    });
+
+    expect(response.success).toBe(true);
+    expect(response.toolName).toBe('orderRefill');
+    expect(response.toolArgs?.medicineName).toBe('Metformin');
+    expect(response.toolArgs?.quantity).toBe(180);
+    expect(response.toolResult?.paymentStatus).toBe('INVOICE_SENT');
   });
 
   // TEST 4: Intent analysis for checking Ring doorbell -> ringDeviceHub (checkFrontPorch)

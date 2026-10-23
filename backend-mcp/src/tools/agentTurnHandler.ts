@@ -288,10 +288,22 @@ function resolveOfflineHeuristic(query: string): {
     }
 
     let quantity = 30;
+    const daysSupplyMatch = query.match(/\b(\d{1,3})\s*-?\s*days?\b/i);
     const explicitPillMatch = query.match(/\b(\d{1,3})\s*(?:tablets|pills|capsules|tabs|doses)\b/i);
     const verbQtyMatch = query.match(/(?:order|refill|reorder|re-order|buy|send|get)\s+(?:a\s+)?(?:supply\s+of\s+)?(\d{1,3})\b(?!\s*mg|\s*mcg|\s*ml)/i);
 
-    if (explicitPillMatch) {
+    if (daysSupplyMatch) {
+      const parsedDays = parseInt(daysSupplyMatch[1], 10);
+      if (parsedDays > 0) {
+        if (medicineName.toLowerCase().includes('metformin')) {
+          quantity = parsedDays * 2;
+        } else if (parsedDays >= 90) {
+          quantity = parsedDays * 2;
+        } else {
+          quantity = parsedDays;
+        }
+      }
+    } else if (explicitPillMatch) {
       const parsed = parseInt(explicitPillMatch[1], 10);
       if (parsed > 0) quantity = parsed;
     } else if (verbQtyMatch) {

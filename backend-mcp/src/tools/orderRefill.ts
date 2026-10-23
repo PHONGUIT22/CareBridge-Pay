@@ -128,13 +128,15 @@ export const orderRefillTool = {
     // 4. Check senior's pre-approved monthly spending limit (Family Wallet - $50.00 max threshold)
     const wallet = await TransactionRepo.getUserWallet(userId);
     const limitThreshold = wallet.monthlyLimit || 50.0;
-    const exceedsLimit = totalNumeric > limitThreshold;
+    const currentSpent = wallet.monthlySpent || 0;
+    const projectedTotalSpent = parseFloat((currentSpent + totalNumeric).toFixed(2));
+    const exceedsLimit = totalNumeric > limitThreshold || projectedTotalSpent > limitThreshold;
 
     // -------------------------------------------------------------
     // FLOW A: EXCEEDS LIMIT -> Create PayPal Invoice & Dispatch SMS
     // -------------------------------------------------------------
     if (exceedsLimit) {
-      console.warn(`[orderRefill] Refill total ($${totalNumeric}) exceeds Family Wallet limit ($${limitThreshold}). Triggering Invoicing.`);
+      console.warn(`[orderRefill] Refill total ($${totalNumeric}) brings monthly spending ($${projectedTotalSpent.toFixed(2)}) above Family Wallet limit ($${limitThreshold.toFixed(2)}). Triggering Invoicing.`);
 
       const invoice = await paypalService.createInvoice({
         caregiverEmail: wallet.caregiverEmail,
@@ -143,8 +145,8 @@ export const orderRefillTool = {
         quantity,
         price: totalNumeric,
         currency: 'USD',
-        note: `Medication refill for Eleanor Vance (${matchedMed.name}) exceeds monthly Family Wallet limit of $${limitThreshold.toFixed(2)}.`,
-        exceedsLimitReason: `Refill price $${totalNumeric.toFixed(2)} exceeds approved limit threshold $${limitThreshold.toFixed(2)}`,
+        note: `Medication refill for Eleanor Vance (${matchedMed.name}) costs ${totalPrice}, bringing monthly spending ($${projectedTotalSpent.toFixed(2)}) above the $${limitThreshold.toFixed(2)} Family Wallet limit.`,
+        exceedsLimitReason: `Refill price ${totalPrice} brings monthly spending to $${projectedTotalSpent.toFixed(2)}, exceeding approved limit of $${limitThreshold.toFixed(2)}`,
       });
 
       // Dispatch emergency transactional SMS alert to caregiver
@@ -165,7 +167,7 @@ export const orderRefillTool = {
         invoiceUrl: invoice.invoiceUrl,
       });
 
-      const speechText = `This refill order for ${matchedMed.name} is ${totalPrice}, which exceeds your pre-approved $${limitThreshold.toFixed(0)} monthly family wallet limit. I've sent a PayPal approval invoice and SMS alert to your caregiver Sarah to authorize.`;
+      const speechText = `This refill order for ${matchedMed.name} is ${totalPrice}, which brings your monthly spending to $${projectedTotalSpent.toFixed(2)} and exceeds your pre-approved $${limitThreshold.toFixed(0)} monthly family wallet limit. I've sent a PayPal approval invoice and SMS alert to your caregiver Sarah to authorize.`;
 
       return {
         success: true,

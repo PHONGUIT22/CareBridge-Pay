@@ -43,6 +43,8 @@ export async function seedDemoData(
     db.prepare('DELETE FROM intake_logs WHERE user_id = ?').run(userId);
     db.prepare('DELETE FROM daily_vitals WHERE user_id = ?').run(userId);
     db.prepare('DELETE FROM medicines WHERE user_id = ?').run(userId);
+    db.prepare('UPDATE users SET monthly_wallet_spent = 0.0, monthly_wallet_limit = 50.0 WHERE id = ?').run(userId);
+    db.prepare('DELETE FROM transactions WHERE user_id = ?').run(userId);
   }
 
   // 2. Add realistic geriatric medication regimen
