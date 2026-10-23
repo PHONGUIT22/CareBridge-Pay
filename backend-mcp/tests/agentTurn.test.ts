@@ -35,7 +35,7 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
     expect(response.speechResponse).toBeDefined();
   });
 
-  // TEST 3: Intent analysis for prescription refill via Amazon Pharmacy -> orderRefill
+  // TEST 3: Intent analysis for prescription refill via PayPal Platform -> orderRefill
   it('dispatches orderRefill tool when patient requests a prescription refill', async () => {
     const response = await handleAgentTurn({
       query: 'I am running out of Lipitor, please order a refill for me',
@@ -44,13 +44,14 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
     expect(response.success).toBe(true);
     expect(response.toolName).toBe('orderRefill');
     expect(response.toolResult).toBeDefined();
-    expect(response.toolResult.orderId).toMatch(/^114-\d{7}-\d{7}$/);
+    expect(response.toolResult.orderId).toBeDefined();
+    expect(response.toolResult.paymentMethod).toContain('PayPal');
     expect(response.toolResult.quantityAdded).toBe(30);
   });
 
   it('dispatches orderRefill tool with extracted custom quantity when patient requests 60 tablets', async () => {
     const response = await handleAgentTurn({
-      query: 'Alexa, order 60 pills of Metformin from Amazon Pharmacy',
+      query: 'Alexa, order 60 pills of Metformin with PayPal',
     });
 
     expect(response.success).toBe(true);
@@ -58,6 +59,7 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
     expect(response.toolArgs?.quantity).toBe(60);
     expect(response.toolResult?.quantityAdded).toBe(60);
     expect(response.speechResponse).toContain('60 tablets');
+    expect(response.speechResponse).toContain('PayPal');
   });
 
   // TEST 4: Intent analysis for checking Ring doorbell -> ringDeviceHub (checkFrontPorch)
@@ -162,4 +164,3 @@ describe('CareBridge Ambient Agentic Loop & Voice Turn Orchestrator', () => {
     expect(response.toolResult.medicineName).toContain('Aspirin');
   });
 });
-
