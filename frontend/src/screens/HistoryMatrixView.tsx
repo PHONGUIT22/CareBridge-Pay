@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { MedicationPunchCard } from '../components/MedicationPunchCard';
+import { MedicalFinancialLedger } from '../components/MedicalFinancialLedger';
 import { useHeatmap } from '../hooks/useHeatmap';
 import { pdfService } from '../services/pdfService';
 import { mcpClient } from '../services/mcpClient';
@@ -12,6 +13,9 @@ import {
   faArrowsRotate,
   faCrown,
   faEye,
+  faTableCells,
+  faCalendarDays,
+  faCoins,
 } from '@fortawesome/free-solid-svg-icons';
 
 import { DoctorReportPreviewModal } from '../components/DoctorReportPreviewModal';
@@ -36,6 +40,7 @@ export function HistoryMatrixView({
   caregiverName,
   patientAge,
 }: HistoryMatrixViewProps) {
+  const [activeSubView, setActiveSubView] = useState<'ledger' | 'matrix'>('ledger');
   const [isExporting, setIsExporting] = useState(false);
   const [isPreviewModalOpen, setIsPreviewModalOpen] = useState(false);
   const { medicines, rawLogs, rawVitals, loading, refetch } = useHeatmap();
@@ -99,26 +104,33 @@ export function HistoryMatrixView({
     'slate',
   ];
 
+  const currentPatient = authSession?.patientName || patientName || 'Eleanor Vance';
+  const currentCaregiver = authSession?.caregiverName || caregiverName || 'Sarah Connor';
+
   return (
-    <div className="min-h-full bg-[#F8FAFC] text-slate-900 p-4 sm:p-5 font-sans select-none pb-28">
-      <div className="max-w-xl mx-auto flex flex-col gap-4">
-        {/* 1. HEADER SECTION (MATCHES image/4.png) */}
-        <div className="flex items-start justify-between pt-1">
+    <div className="min-h-full bg-[#F8FAFC] text-slate-900 p-3 sm:p-5 font-sans select-none pb-28">
+      <div className="max-w-4xl mx-auto flex flex-col gap-4">
+        {/* 1. HEADER SECTION */}
+        <div className="flex flex-col sm:flex-row sm:items-start justify-between pt-1 gap-3">
           <div>
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600 font-mono">
-              CAREBRIDGE COMPLIANCE MATRIX
-            </span>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-0.5">
-              Medication History
-            </h1>
-            <div className="mt-1 flex items-center gap-2">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-[#1E3A8A] border border-blue-200/80 shadow-2xs">
-                4 Active Prescriptions (5 Daily Doses Tracker)
+            <div className="flex items-center gap-2">
+              <span className="text-xs font-bold uppercase tracking-wider text-[#0070BA] font-mono">
+                CAREBRIDGE PAY • AUDIT & COMPLIANCE
+              </span>
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-mono font-bold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Powered by AG Grid Enterprise Telemetry</span>
               </span>
             </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mt-0.5">
+              Medical & Financial History
+            </h1>
+            <p className="text-xs text-slate-500 mt-0.5">
+              Correlating {currentPatient}&apos;s medication compliance with PayPal autonomous refills
+            </p>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 self-start sm:self-auto">
             <button
               onClick={() => refetch()}
               className="p-2.5 rounded-xl bg-white hover:bg-slate-100 border border-slate-200 text-slate-500 hover:text-slate-800 transition-all shadow-2xs"
@@ -127,7 +139,7 @@ export function HistoryMatrixView({
               <FontAwesomeIcon icon={faArrowsRotate} className="text-xs" />
             </button>
 
-            {/* One-Tap Quick Doctor A4 Preview Button */}
+            {/* Quick Doctor A4 Preview Button */}
             <button
               onClick={() => {
                 if (!isPro) {
@@ -137,17 +149,17 @@ export function HistoryMatrixView({
                 setIsPreviewModalOpen(true);
               }}
               className="inline-flex items-center gap-1.5 px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm active:scale-95 transition-all"
-              title="One-Tap Quick Doctor A4 Report Preview with 30-day BP Chart & QR Code"
+              title="Quick Doctor A4 Report Preview with 30-day BP Chart & QR Code"
             >
               <FontAwesomeIcon icon={faEye} className="text-xs" />
               <span>Preview A4</span>
             </button>
 
-            {/* Export PDF Button (image/4.png) */}
+            {/* Export PDF Button */}
             <button
               onClick={handleExportPDF}
               disabled={isExporting}
-              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-[#1E3A8A] hover:bg-[#1E40AF] text-white shadow-sm active:scale-95 transition-all disabled:opacity-75"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-xs font-semibold bg-[#003087] hover:bg-[#002266] text-white shadow-sm active:scale-95 transition-all disabled:opacity-75"
               title={isPro ? 'Export PDF Report for Doctor' : 'Doctor PDF Export'}
             >
               <FontAwesomeIcon icon={faFileArrowDown} className={`text-xs ${isExporting ? 'animate-bounce' : ''}`} />
@@ -156,73 +168,111 @@ export function HistoryMatrixView({
           </div>
         </div>
 
+        {/* 2. SUB-VIEW SELECTOR: AG GRID LEDGER VS PUNCH-CARD MATRIX */}
+        <div className="flex items-center p-1 bg-slate-200/80 rounded-2xl w-full sm:w-fit">
+          <button
+            onClick={() => setActiveSubView('ledger')}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              activeSubView === 'ledger'
+                ? 'bg-white text-[#003087] shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <FontAwesomeIcon icon={faTableCells} className="text-xs text-[#0070BA]" />
+            <span>AG Grid Medical-Financial Ledger</span>
+            <span className="px-1.5 py-0.2 rounded-md bg-[#0070BA]/10 text-[#003087] text-[10px] font-mono">
+              $5,000 Bounty
+            </span>
+          </button>
+
+          <button
+            onClick={() => setActiveSubView('matrix')}
+            className={`flex-1 sm:flex-none flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+              activeSubView === 'matrix'
+                ? 'bg-white text-[#003087] shadow-sm'
+                : 'text-slate-600 hover:text-slate-900'
+            }`}
+          >
+            <FontAwesomeIcon icon={faCalendarDays} className="text-xs text-slate-500" />
+            <span>Punch-Card Heatmap</span>
+          </button>
+        </div>
+
         {/* FREE TIER NOTICE */}
         {!isPro && (
           <div className="p-3.5 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-between text-xs text-amber-900">
             <div className="flex items-center gap-2">
               <FontAwesomeIcon icon={faCrown} className="text-amber-600 text-sm" />
               <span>
-                <strong>Free Tier Active:</strong> 7-day adherence visible. Clinical Doctor PDF export is locked.
+                <strong>Caregiver Copilot:</strong> Upgrade to Pro with PayPal Subscriptions ($9.99/mo) for certified doctor exports & unlimited refills.
               </span>
             </div>
             <button
               onClick={onOpenPaywall}
-              className="px-2.5 py-1 rounded-lg bg-amber-200 hover:bg-amber-300 text-amber-950 font-bold text-xs shrink-0 transition-colors shadow-2xs"
+              className="px-2.5 py-1 rounded-lg bg-[#003087] hover:bg-[#002266] text-white font-bold text-xs shrink-0 transition-colors shadow-2xs"
             >
-              Unlock Pro
+              Subscribe via PayPal
             </button>
           </div>
         )}
 
-        {/* 2. PUNCH-CARD LIST (MATCHES image/4.png - Navy Card 1, Teal Card 2) */}
-        <div className="flex flex-col gap-4 mt-1">
-          {loading && medicines.length === 0 ? (
-            <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm p-8 text-center text-slate-400 text-xs">
-              Loading verified 30-day compliance logs...
+        {/* 3. CONTENT AREA */}
+        {activeSubView === 'ledger' ? (
+          <MedicalFinancialLedger
+            patientName={currentPatient}
+            caregiverName={currentCaregiver}
+            refreshTrigger={refreshTrigger}
+          />
+        ) : (
+          <div className="flex flex-col gap-4">
+            {loading && medicines.length === 0 ? (
+              <div className="bg-white rounded-[24px] border border-slate-100 shadow-sm p-8 text-center text-slate-400 text-xs">
+                Loading verified 30-day compliance logs...
+              </div>
+            ) : (
+              medicines.map((med, index) => {
+                const isMetformin = med.name.toLowerCase().includes('metformin');
+                const displayDosage = isMetformin
+                  ? '500mg - Oral • 2 Doses/Day (08:00 & 18:00)'
+                  : med.dosage;
+
+                return (
+                  <MedicationPunchCard
+                    key={med.id}
+                    medicineName={med.name}
+                    dosage={displayDosage}
+                    scheduledTime={med.scheduledTime}
+                    streakDays={med.streakDays}
+                    completedDoses={med.completedDoses}
+                    adherenceRate={med.adherenceRate}
+                    matrixData={med.matrixData}
+                    onDelete={() => handleDeleteMedicine(med.id)}
+                    colorTheme={colorThemes[index % colorThemes.length]}
+                  />
+                );
+              })
+            )}
+
+            {/* SECURE CLINICAL AUDIT TRAIL BANNER */}
+            <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center gap-3">
+              <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200/60">
+                <FontAwesomeIcon icon={faCircleCheck} className="text-base" />
+              </div>
+              <div className="text-xs text-slate-600 leading-relaxed font-normal">
+                <strong className="text-slate-900 font-semibold">Clinical Audit Trail:</strong> 30-day medication adherence and biometric trends are continuously verified and formatted for physician consultation.
+              </div>
             </div>
-          ) : (
-            medicines.map((med, index) => {
-              const isMetformin = med.name.toLowerCase().includes('metformin');
-              const displayDosage = isMetformin
-                ? '500mg - Oral • 2 Doses/Day (08:00 & 18:00)'
-                : med.dosage;
-
-              return (
-                <MedicationPunchCard
-                  key={med.id}
-                  medicineName={med.name}
-                  dosage={displayDosage}
-                  scheduledTime={med.scheduledTime}
-                  streakDays={med.streakDays}
-                  completedDoses={med.completedDoses}
-                  adherenceRate={med.adherenceRate}
-                  matrixData={med.matrixData}
-                  onDelete={() => handleDeleteMedicine(med.id)}
-                  colorTheme={colorThemes[index % colorThemes.length]}
-                />
-              );
-            })
-          )}
-        </div>
-
-        {/* 3. SECURE CLINICAL AUDIT TRAIL BANNER */}
-        <div className="bg-white rounded-2xl p-4 border border-slate-200/80 shadow-2xs flex items-center gap-3 mt-1">
-          <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0 border border-emerald-200/60">
-            <FontAwesomeIcon icon={faCircleCheck} className="text-base" />
           </div>
-          <div className="text-xs text-slate-600 leading-relaxed font-normal">
-            <strong className="text-slate-900 font-semibold">Clinical Audit Trail:</strong> 30-day medication adherence and biometric trends are continuously verified and formatted for physician consultation.
-          </div>
-        </div>
+        )}
       </div>
 
       {/* ONE-TAP QUICK DOCTOR A4 PREVIEW MODAL */}
       <DoctorReportPreviewModal
         isOpen={isPreviewModalOpen}
         onClose={() => setIsPreviewModalOpen(false)}
-        patientName={authSession?.patientName || patientName || 'Eleanor Vance'}
+        patientName={currentPatient}
         patientAge={authSession?.patientAge || patientAge || 78}
-        caregiverName={authSession?.caregiverName || caregiverName || 'Sarah Connor'}
+        caregiverName={currentCaregiver}
         adherenceRate={
           medicines.length > 0
             ? Math.round(
