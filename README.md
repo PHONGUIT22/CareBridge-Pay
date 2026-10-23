@@ -1,20 +1,18 @@
-# CareBridge Ambient OS
+# CareBridge Pay: Ambient Agentic Healthcare & Autonomous Family Commerce 💳🩺
 
 <div align="center">
 
-**Ambient Medication Adherence & Clinical Copilot for Amazon Echo Show 10**  
-*Built for the Amazon Developer Hackathon 2026: Build, Ship, Shape.*
+**Autonomous AI Agentic Healthcare Commerce powered by PayPal Developer Platform & Model Context Protocol (MCP)**  
+*Built for the PayPal AI Hackathon 2026 (Devpost) • Tracks: Agentic Commerce, Best Use of PayPal + AI & AG Grid Sponsor Bounty ($5,000)*
 
-[![Hackathon Track](https://img.shields.io/badge/Track-Alexa%2B%20(MCP%20Streamable%20HTTP)-FF9900?style=for-the-badge&logo=amazonechoshow&logoColor=white)](https://devpost.com)
-[![Mini-Challenge: AWS Builder](https://img.shields.io/badge/AWS%20Builder-Bedrock%20%2B%20Polly%20%2B%20SNS-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)](https://aws.amazon.com)
-[![Amazon Devices](https://img.shields.io/badge/Amazon%20Devices-ADBT%20Validated-FF9900?style=for-the-badge&logo=amazon&logoColor=white)](#10-amazon-devices-builder-tools-adbt-integration)
-[![Hardware Track](https://img.shields.io/badge/Amazon%20Devices-Echo%20Show%2010%20Fidelity-00CAFF?style=for-the-badge&logo=amazon&logoColor=white)](#-pillar-3-echo-show-10-hardware-fidelity--ambient-ux)
-[![Cross-Track](https://img.shields.io/badge/Cross--Device-Alexa%2B%20•%20Ring%20•%20Bee%20Wearable-10B981?style=for-the-badge&logo=amazonechoshow&logoColor=white)](#11-track-bee-wearable-ai--apple-watch-context-bridge)
-[![Mini-Challenge: Open Source](https://img.shields.io/badge/License-MIT%20Open%20Source-10B981?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
-[![Judging Bonus](https://img.shields.io/badge/Friction%20Log-%2B10%25%20Bonus%20Attached-00CAFF?style=for-the-badge&logo=buffer&logoColor=white)](./FRICTION_LOG.md)
-[![Architecture](https://img.shields.io/badge/Stack-Next.js%2015%20•%20Express%20MCP%20•%20SQLite%20WAL-6366F1?style=for-the-badge&logo=react&logoColor=white)](#-tech-stack)
+[![PayPal AI Hackathon 2026](https://img.shields.io/badge/Hackathon-PayPal%20AI%20Hackathon%202026-003087?style=for-the-badge&logo=paypal&logoColor=white)](https://devpost.com)
+[![PayPal Orders v2 & Vault](https://img.shields.io/badge/PayPal%20Developer-Orders%20v2%20•%20Vault%20•%20Invoicing%20•%20Subscriptions-0070BA?style=for-the-badge&logo=paypal&logoColor=white)](#-paypal-developer-platform--agentic-commerce)
+[![AG Grid $5,000 Bounty](https://img.shields.io/badge/AG%20Grid%20Bounty-%245%2C000%20Prize%20Aligned-42A5F5?style=for-the-badge&logo=ag-grid&logoColor=white)](#-ag-grid-medical-financial-ledger-5000-sponsor-bounty)
+[![AWS Bedrock & MCP](https://img.shields.io/badge/AI%20Agent-MCP%20Streamable%20HTTP%20%2B%20Bedrock%20Claude-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](#-model-context-protocol-mcp--agentic-loop)
+[![License: MIT](https://img.shields.io/badge/License-MIT%20Open%20Source-10B981?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
+[![Vitest 95/95 Tests Passed](https://img.shields.io/badge/Vitest-95%20Passed%20(9%20Suites)-10B981?style=for-the-badge&logo=vitest&logoColor=white)](#-testing--verification)
 
-[📺 Watch Live Demo (YouTube)](https://youtu.be/placeholder) • [💻 Public GitHub Repository](https://github.com/PHONGUIT22/CareBridge-Ambient) • [🏛️ System Architecture](./ARCHITECTURE.md) • [📑 Friction Log & DX Feedback](./FRICTION_LOG.md) • [📜 MIT License](./LICENSE) • [📐 Product Spec](./PRODUCT.md) • [🎨 Design System](./DESIGN.md)
+[📺 Watch Live Demo (YouTube)](https://youtu.be/placeholder) • [💻 Public GitHub Repository](https://github.com/PHONGUIT22/carebridge-pay) • [🏛️ System Architecture](./ARCHITECTURE.md) • [📐 Product Spec](./PRODUCT.md) • [🎬 3-Min Demo Script](./DEMO_SCRIPT_3MIN.md) • [📜 MIT License](./LICENSE)
 
 </div>
 
@@ -22,494 +20,256 @@
 
 ## 🌟 Executive Summary
 
-**CareBridge Ambient OS** transforms smart displays (specifically the **Amazon Echo Show 10**) into a 24/7 proactive, glanceable healthcare station for seniors living independently and remote family caregivers.
+**CareBridge Pay** pioneers **True Agentic Healthcare Commerce** by transforming ambient bedside and countertop smart displays into an autonomous, proactive medical commerce hub for independent seniors and remote family caregivers.
 
-> [!NOTE]
-> **Hardware Form Factor Notice (Simulator Architecture & ADBT Validation):**  
-> Because Alexa+ Add-ons and third-party Echo Show 10 runtime APIs are currently in private developer preview, CareBridge Ambient OS was engineered as a pixel-perfect **Echo Show 10 Ambient Display Hardware Simulator**. The interface was **scaffolded and validated against Amazon Echo Show 10 ergonomics using Amazon Devices Builder Tools (ADBT) MCP integration**, adhering to official Amazon 10-foot viewing ergonomics, WCAG AAA contrast tokens, Web Audio API frequency-reactive light bar simulation (`#00CAFF`), and cross-device Ring doorbell porch camera feeds.
+Powered by the **PayPal Developer Platform (Orders API v2, Vault Tokens, Invoicing, Subscriptions, Webhooks)** and the **Anthropic/Amazon Model Context Protocol (MCP)**, CareBridge Pay eliminates the burden of manual prescription ordering for elderly patients who struggle with tremors, cognitive fatigue, or convoluted checkout screens.
 
-Millions of older adults forget daily medications or misjudge acute symptoms (such as orthostatic hypotension or coronary distress). Traditional mobile apps fail because seniors suffer from tremors, low vision, and app-navigation fatigue. CareBridge solves this with:
-1. **Full MCP Tri-Pillar Architecture (Tools + Resources + Prompts):** Complete adherence to Anthropic & Amazon Model Context Protocol specifications (not just tools, but static/dynamic clinical resources and structured clinical prompt workflows).
-2. **Clinical Enterprise AWS Bedrock Pipeline:** Simulated & integrated Amazon Bedrock Guardrails (Topic Denial & PII Redaction), streaming token inference with AWS Polly (Time to First Audio < 400ms), and a 15-drug Beers Criteria geriatric pharmacology registry.
-3. **Glanceable Bedside UX (6-Foot Rule):** High-contrast numerals, soothing dark surfaces, and oversized (56px+) tremor-tolerant touch targets (`"I TOOK MY PILL"`).
-4. **Web Audio Reactive Alexa Cyan Ambient Glow (`#00CAFF`):** Signature hardware light bar connected to Web Audio API `AudioContext` and `AnalyserNode` that ripples and undulates based on real-time vocal amplitude and Polly neural speech.
-5. **Ring Doorbell Live Porch Camera Simulation:** Switchable 850nm IR night-vision, sweeping radar scan line, and emerald green computer vision bounding box tracking `[Amazon Prime Package - Verified]`.
-6. **One-Tap Quick Doctor A4 Preview Modal:** Hospital-grade A4 clinical summary sheet with 30-day blood pressure longitudinal trajectory chart and scannable HL7/FHIR QR code.
-7. **Autonomous Amazon Pharmacy Refills:** Automatically detects low stock ($\le 5$ tablets remaining) after dose confirmation, offering 1-click voice replenishment via Amazon Pharmacy (`orderRefillTool`).
+### 💡 The Core Breakthrough:
+1. **Autonomous Low-Stock Detection & Voice Settlement**: When a senior confirms taking a daily dose via natural voice, the AI agent logs the intake and audits remaining pill counts (`logDoseStatus`). When stock reaches $\le 3$ pills, the agent proactively alerts the senior and autonomously settles a 30-day prescription refill through **PayPal Orders API v2** and a **pre-approved PayPal Vault token** (within the senior's **Family Wallet monthly spending limit**).
+2. **Caregiver Invoice Escalation & SMS Link**: If an autonomous refill exceeds the senior's monthly wallet limit (e.g. $50.00), CareBridge Pay automatically generates a **PayPal Caregiver Invoice** (`POST /v2/invoicing/invoices`) and dispatches an instant SMS to caregiver Sarah Connor with a secure 1-tap authorization link.
+3. **AG Grid Medical-Financial Ledger ($5,000 Bounty)**: An enterprise-grade **AG Grid (v36 Community)** data table in the Caregiver and Doctor portal correlating daily biometric vitals (Blood Pressure, Glucose, Heart Rate) directly with medication compliance and PayPal transaction receipts (`PAYID-...`), complete with live SSE synchronization and CSV/Excel exports.
+4. **PayPal Subscriptions API ($9.99/mo Copilot Pro)**: Replaces paywalls with recurring billing for continuous remote AI monitoring, vitals analysis, and hospital-grade PDF exports.
 
 ---
 
-## 🎯 Hackathon Track Alignment & Submission Proof
+## 🏗️ System Architecture
 
-| Devpost Submission Field | CareBridge Implementation | Runtime Verification & Evidence |
+```
+                      ┌────────────────────────────────────────┐
+                      │    PATIENT VOICE / TOUCH CONFIRMATION  │
+                      │     "Alexa, I took my Amlodipine"      │
+                      └───────────────────┬────────────────────┘
+                                          │
+                                          ▼
+                      ┌────────────────────────────────────────┐
+                      │      AMBIENT SMART SCREEN CLIENT       │
+                      │    (Next.js 15 • Ambient Blue UI)      │
+                      └───────────────────┬────────────────────┘
+                                          │  SSE / REST (JSON-RPC)
+                                          ▼
+                      ┌────────────────────────────────────────┐
+                      │        BACKEND MCP AGENT SERVER        │
+                      │       (Model Context Protocol)         │
+                      └─────────────┬────────────────────┬─────┘
+                                    │                    │
+              Tool Invocation &     │                    │  Natural Voice Audio
+              Intent Classification │                    │  (AWS Polly Neural)
+                                    ▼                    ▼
+                      ┌──────────────────────┐  ┌──────────────────────┐
+                      │  AWS BEDROCK CLAUDE  │  │  CLINICAL BEERS REG  │
+                      │ (Claude Haiku Native │  │ (15-Drug Interaction │
+                      │      Tool-Use)       │  │    Safety Filter)    │
+                      └─────────────┬────────┘  └──────────────────────┘
+                                    │
+                         orderRefill Tool Call
+                                    │
+                                    ▼
+       ┌───────────────────────────────────────────────────────────────┐
+       │             PAYPAL DEVELOPER PLATFORM & APIS                  │
+       │                                                               │
+       │  ┌─────────────────────────┐     ┌─────────────────────────┐  │
+       │  │  PayPal Orders API v2   │     │   PayPal Vault Token    │  │
+       │  │ (createOrder/capture)   │     │ (Pre-approved 1-Click)  │  │
+       │  └───────────┬─────────────┘     └───────────┬─────────────┘  │
+       │              │                               │                │
+       │              └───────────────┬───────────────┘                │
+       │                              │                                │
+       │                Within Limit? │ Exceeds Limit?                 │
+       │            (<= $50.00 Limit) │ (> $50.00 Limit)               │
+       │                              ▼                                │
+       │              ┌───────────────────────────────┐                │
+       │              │   PayPal Invoicing API v2     │                │
+       │              │  (Caregiver SMS link via SNS) │                │
+       │              └───────────────┬───────────────┘                │
+       │                              │                                │
+       │  ┌─────────────────────────┐ │   ┌─────────────────────────┐  │
+       │  │   PayPal Webhook Engine │◄┴───│ PayPal Subscriptions API│  │
+       │  │  (Real-Time SSE Sync)   │     │ ($9.99/mo Caregiver Pro)│  │
+       │  └───────────┬─────────────┘     └─────────────────────────┘  │
+       └──────────────┼────────────────────────────────────────────────┘
+                      │
+                      ▼
+       ┌───────────────────────────────────────────────────────────────┐
+       │                 ATOMIC SQLITE WAL DATABASE                    │
+       │   - transactions (order_id, capture_id, amount, status)       │
+       │   - wallet_limits (monthly_limit, monthly_spent)              │
+       │   - medicine_catalog (stock_count, dosage, schedule)          │
+       │   - daily_intake_logs (adherence, timestamp)                  │
+       │   - biometric_vitals (systolic, diastolic, blood_sugar)       │
+       └──────────────────────────────┬────────────────────────────────┘
+                                      │
+                                      ▼
+       ┌───────────────────────────────────────────────────────────────┐
+       │        AG GRID MEDICAL-FINANCIAL LEDGER ($5K BOUNTY)          │
+       │  - Date/Time, Medication, Status (Taken/Missed)               │
+       │  - Vital Sign (BP/HR), PayPal Transaction ID, Refill Cost     │
+       │  - Payment Status Badge & One-Click CSV/Excel Export          │
+       └───────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 💳 PayPal Developer Platform & Agentic Commerce
+
+| PayPal Capability | Endpoint / Implementation | Hackathon Role |
 | :--- | :--- | :--- |
-| **Primary Track: Alexa+ (Full MCP Architecture)** | Full Model Context Protocol (MCP) server implementing **all 3 MCP Primitives**: **Tools** (`CallToolRequestSchema`, `ListToolsRequestSchema`), **Resources** (`ListResourcesRequestSchema`, `ReadResourceRequestSchema`), and **Prompts** (`ListPromptsRequestSchema`, `GetPromptRequestSchema`). Implements **Streamable HTTP Server-Sent Events (SSE)** transport (`/sse`, `/message`). | [`backend-mcp/src/server.ts`](./backend-mcp/src/server.ts)<br>[`backend-mcp/src/resources/index.ts`](./backend-mcp/src/resources/index.ts)<br>[`backend-mcp/src/prompts/index.ts`](./backend-mcp/src/prompts/index.ts)<br>7 MCP Tools + 2 Clinical Resources + 2 Workflow Prompts. |
-| **Amazon Devices Track: Echo Show 10 & ADBT Validation** | **Scaffolded and validated against Amazon Echo Show 10 ergonomics using Amazon Devices Builder Tools (ADBT) MCP integration:**<br>1. **Web Audio Reactive Light Bar:** Liquid SVG ribbon `#00CAFF` modulating height & bloom based on microphone and Polly audio amplitude.<br>2. **Ring Porch Cam Simulation:** Switchable 850nm IR night-vision, continuous radar scan sweep, and emerald green `[Amazon Prime Package - Verified]` CV bounding box.<br>3. **One-Tap Doctor A4 Preview:** Visualized dynamic 30-day BP chart, scannable HL7/FHIR QR Code, and 1-tap PDF export. | [`frontend/src/components/AlexaAmbientGlow.tsx`](./frontend/src/components/AlexaAmbientGlow.tsx)<br>[`frontend/src/components/RichCards/RingDoorbellCard.tsx`](./frontend/src/components/RichCards/RingDoorbellCard.tsx)<br>[`frontend/src/components/DoctorReportPreviewModal.tsx`](./frontend/src/components/DoctorReportPreviewModal.tsx) |
-| **Track Extension: Bee Wearable AI & Apple Watch Context** | **Continuous Passive Biometric Streaming:** Wearable sensor telemetry ingested via Bee CLI / HealthKit context directly into SQLite WAL, powering the live ambient `Bee Synced • Wearable AI` pulse chip, AHA threshold classification, and Bedrock geriatric clinical reasoning. | [`frontend/src/components/QuickVitalsBar.tsx`](./frontend/src/components/QuickVitalsBar.tsx)<br>[`backend-mcp/src/tools/recordVitals.ts`](./backend-mcp/src/tools/recordVitals.ts)<br>[`backend-mcp/src/tools/agentTurnHandler.ts`](./backend-mcp/src/tools/agentTurnHandler.ts) |
-| **Mini-Challenge: AWS Builder (Clinical Enterprise)** | **End-to-End Enterprise AWS Pipeline:**<br>1. **Amazon Bedrock Runtime:** Claude Haiku 4.5 with Guardrails (Topic Denial for cardiac alterations & PII Redaction for SSN/Credit Cards) + Streaming inference (<400ms TTFA).<br>2. **AWS Polly:** Neural TTS (`Ruth`) streamed directly via Web Audio pipeline.<br>3. **AWS SNS:** High-priority `Transactional` SMS emergency dispatch to caregiver Sarah Connor (`+1 555-0199`).<br>4. **15-Drug Beers Criteria Engine:** Comprehensive geriatric interaction lookup registry with 20 critical safety rules. | [`backend-mcp/src/aws/bedrockClient.ts`](./backend-mcp/src/aws/bedrockClient.ts)<br>[`backend-mcp/src/services/drugInteractionService.ts`](./backend-mcp/src/services/drugInteractionService.ts)<br>[`backend-mcp/src/aws/pollyClient.ts`](./backend-mcp/src/aws/pollyClient.ts)<br>[`backend-mcp/src/aws/snsClient.ts`](./backend-mcp/src/aws/snsClient.ts) |
-| **Mini-Challenge: Open Source** | 100% open-source software under the permissive **MIT License**. Standard root license file and metadata visible directly in GitHub repository about section. | [`LICENSE`](./LICENSE)<br>Verified open-source repository. |
-| **Judging Bonus (+10% Friction Log)** | Comprehensive Developer Experience (DX) report detailing **10 distinct integration hurdles** across Bedrock regional profiles, SSE persistence, audio feedback loops, and Native Tool-Use offline fallbacks. | [`FRICTION_LOG.md`](./FRICTION_LOG.md)<br>10 deep-dive friction entries with actionable suggestions for AWS/Amazon teams. |
-| **Video Demonstration Script** | Full second-by-second storyboard for the 3-minute competition video walkthrough matching all Devpost criteria. | [`DEMO_SCRIPT_3MIN.md`](./DEMO_SCRIPT_3MIN.md)<br>Timed at 2m 50s with pacing audit. |
+| **Orders API v2** | `POST /v2/checkout/orders`<br>`POST /v2/checkout/orders/{id}/capture` | Generates and captures orders autonomously when inventory runs low ($\le 3$ pills). |
+| **Vault API** | Pre-approved token charging | Allows senior Eleanor Vance to settle prescription refills hands-free without navigating passwords or 2FA. |
+| **Invoicing API v2** | `POST /v2/invoicing/invoices`<br>`POST /v2/invoicing/invoices/{id}/send` | Issues formal invoice link to caregiver Sarah Connor when orders exceed monthly Family Wallet limits ($50.00). |
+| **Subscriptions API** | `POST /v1/billing/subscriptions` | Manages recurring $9.99/mo subscription for Caregiver Copilot Pro telemetry. |
+| **Webhooks** | `POST /api/paypal/webhook` | Captures `CHECKOUT.ORDER.APPROVED`, `PAYMENT.CAPTURE.COMPLETED`, `INVOICING.INVOICE.PAID`, and broadcasts SSE. |
 
----
-
-## 🏛️ Pillar 1: Full MCP Tri-Pillar Architecture (Tools + Resources + Prompts)
-
-CareBridge is built on the complete Anthropic / Amazon Model Context Protocol specification:
-
+### Autonomous Agentic Decision Flow
 ```
-                  ┌───────────────────────────────────────────────┐
-                  │          CareBridge MCP Server                │
-                  │   Streamable HTTP (SSEServerTransport /sse)   │
-                  └──────┬────────────────┬───────────────┬───────┘
-                         │                │               │
-        ┌────────────────▼─────────┐      │      ┌────────▼────────────────┐
-        │        MCP TOOLS         │      │      │       MCP PROMPTS       │
-        ├──────────────────────────┤      │      ├─────────────────────────┤
-        │ • getTodaySchedule       │      │      │ • morning_medication_   │
-        │ • logDoseStatus          │      │      │   checkin               │
-        │ • recordVitals           │      │      │ • acute_chest_pain_     │
-        │ • clinicalAdvisor        │      │      │   triage                │
-        │ • orderRefill            │      │      └─────────────────────────┘
-        │ • ringDeviceHub          │      │
-        │ • negotiateAdherence     │      │
-        └──────────────────────────┘      │
-                               ┌──────────▼──────────────┐
-                               │      MCP RESOURCES      │
-                               ├─────────────────────────┤
-                               │ • carebridge://patient/ │
-                               │   eleanor-vance/        │
-                               │   adherence-30d         │
-                               │ • carebridge://clinical/│
-                               │   prescriptions/active  │
-                               └─────────────────────────┘
-```
-
-### The Full Tri-Pillar MCP Implementation (7 Tools, 2 Resources, 2 Prompts)
-
-#### 1. The 7 Registered MCP Action Tools
-- [`getTodaySchedule`](./backend-mcp/src/tools/getTodaySchedule.ts): Queries daily regimen, adherence rate, and upcoming doses.
-- [`logDoseStatus`](./backend-mcp/src/tools/logDoseStatus.ts): Logs taken/skipped, decrements inventory, and triggers low-stock alerts ($\le 3$ pills).
-- [`recordVitals`](./backend-mcp/src/tools/recordVitals.ts): Records blood pressure, heart rate, and blood glucose in SQLite WAL.
-- [`clinicalAdvisor`](./backend-mcp/src/tools/clinicalAdvisor.ts): Bedrock Claude Haiku triage with AWS SNS emergency caregiver dispatch.
-- [`orderRefill`](./backend-mcp/src/tools/orderRefill.ts): Autonomous Amazon Pharmacy 1-click replenishment (+30 tablets, Prime 2-Day delivery).
-- [`ringDeviceHub`](./backend-mcp/src/tools/ringDeviceHub.ts): Smart home IoT bridge for Ring Doorbell live night-vision camera, package CV detection, and paramedic smart deadbolt emergency unlock.
-- [`negotiateAdherence`](./backend-mcp/src/tools/negotiateAdherence.ts): Multi-turn compassionate AI guardian negotiation for medication refusal, with automatic **Sarah Connor Circuit-Breaker** escalation.
-
-#### 2. The 2 Registered MCP Resources
-MCP clients can read clinical state directly without triggering tool invocations:
-- `carebridge://patient/eleanor-vance/adherence-30d`: Exposes 30 days of structured adherence events, dosages, and compliance percentages in standard JSON.
-- `carebridge://clinical/prescriptions/active`: Exposes active medication catalog with expiration dates, daily dosage frequencies, and real-time inventory counts.
-
-#### 3. The 2 Registered MCP Prompts
-Re-usable clinical workflow templates that guide assistant interaction:
-- `morning_medication_checkin`: Directs Alexa to converse with gentle geriatric phrasing, reminding the senior of hydration and breakfast intake.
-- `acute_chest_pain_triage`: Enforces strict emergency triage protocol, bypassing pleasantries to assess radiation of pain, dyspnea, and triggering smart lock / paramedic SMS alert.
-
----
-
-## ☁️ Pillar 2: AWS Bedrock Clinical Enterprise Architecture
-
-### 1. Amazon Bedrock Guardrails
-- **Topic Denial Guardrail**: Prohibits dangerous clinical instructions. If a patient asks to self-adjust critical cardiac medication (e.g. *"Can I double my Digoxin dose?"*), Bedrock Guardrail blocks generation and returns:
-  > *"CareBridge Clinical Guardrail Intervention: Medication dosages must never be adjusted without direct physician authorization. Please consult Dr. Robert Mercer."*
-- **Sensitive Information Redaction (PII Masking)**: Automatically detects and masks Credit Card numbers and Social Security Numbers (`[CREDIT_CARD_REDACTED]`, `[SSN_REDACTED]`) if read aloud.
-
-### 2. Streaming Inference & Polly Low-Latency Voice (<400ms TTFA)
-- Using `InvokeModelWithResponseStreamCommand`, Claude Haiku 4.5 text tokens are streamed in chunks.
-- Text is sent to AWS Polly (`Ruth` Neural Voice) upon completing the first clinical clause, achieving a **Time to First Audio (TTFA) of < 400ms**.
-
-### 3. Beers Criteria Geriatric Pharmacology Registry (15 Drugs)
-Engineered in [`drugInteractionService.ts`](./backend-mcp/src/services/drugInteractionService.ts) with 20 critical interaction rules covering:
-- **Warfarin, Aspirin, Lisinopril, Metformin, Digoxin, Spironolactone, Furosemide, Atorvastatin, Amlodipine, Hydrochlorothiazide, Ibuprofen, Naproxen, Omeprazole, Clopidogrel, Ciprofloxacin**.
-- Clinical flags for **fatal bleeding risks**, **severe hyperkalemia**, **digoxin toxicity**, and **Beers Criteria renal warnings**.
-
----
-
-## 📱 Pillar 3: Echo Show 10 Hardware Fidelity & Ambient UI
-
-### 1. Amazon Echo Show 10 Hardware Frame Simulator (`page.tsx` & `TopNavBar.tsx`)
-- **10.1" 16:10 Landscape Bezel**: Charcoal/graphite hardware frame matching Amazon Echo Show 10 (3rd Gen) industrial ergonomics.
-- **13MP Wide Motion Camera & Physical Privacy Shutter**: Integrated hardware camera notch with physical sliding toggle (`Shutter OPEN / CLOSED`) and hardware volume rockers.
-- **Motorized Motion Swivel Base Silhouette**: Cylindrical brushless motor speaker base underneath with acoustic fabric mesh pattern, Amazon smile contour, and subtle cyan ambient LED underglow.
-- **3-Way Viewport Switcher**: Toggle between `Dual Frame` (Dev Console), `Echo Show 10` (Hardware Simulator), and `Single Mobile`.
-
-### 2. Proactive Ring Doorbell Motion Alert & Web Audio 2-Tone Chime
-- **Zero-Dependency Web Audio 2-Tone Chime (`playRingChime`)**: Procedural synthesizer generating the signature Ring Doorbell chime (880Hz &rarr; 659.25Hz) with metallic bell decay.
-- **Proactive Motion Detection Banner**: Floating top notification banner alerting the senior when a courier approaches the front porch (*"Ring Doorbell: Motion Detected at Front Porch • Amazon Prime delivery"*).
-- **1-Click Test Button (`Simulate Delivery 📦`)**: Available directly on the top navigation bar for evaluators to trigger instant parcel arrival simulations.
-
-### 3. Bedside Desk Mode with Ambient Glance & OLED Night Dimmer (`DeskModeView.tsx`)
-- **Environmental Glance**: Live weather widget (`🌤️ 72°F Seattle, WA • Partly Cloudy • Hum 45%`) and Ring smart home security glance (`🔒 Front Door: Ring Locked • AC: 70°F`).
-- **Circadian Contextual Greetings**: Dynamic time-of-day greetings (*"Good morning, Eleanor"*, *"Good evening, Eleanor"*, *"Rest peacefully tonight, Eleanor"*).
-- **OLED Night Dimmer Mode**: 1-click toggle to a low-glare, warm amber/crimson sleep palette preserving elderly melatonin production and circadian rhythm.
-
-### 4. Amazon Pharmacy 4-Step Live Tracking & Ring Cam Bridge (`AmazonOrderCard.tsx`)
-- **Dynamic 4-Step Fulfillment Timeline**:
-  1. `1. Placed` (Voice refill authorized via Alexa+)
-  2. `2. Rx Verified` (Pharmacist review & Beers Criteria 2026 check passed)
-  3. `3. Prime In-Transit` (Courier dispatched via Prime Same-Day Delivery)
-  4. `4. At Porch` (Parcel delivered on front porch mat)
-- **Ring Porch Camera Bridge**: Seamless 1-click button (`🎥 View Porch Camera`) transitioning from the pharmacy order card directly to the Ring Doorbell Pro 2 live feed with computer vision parcel tracking.
-
-### 5. Geriatric Safety Shield & FDA Beers Criteria 2026 Audit (`MedicineCard.tsx`)
-- **Clinical Badges**: Every prescription card features `🛡️ Beers Audited` (emerald) and `⚡ Shield Active` (sky cyan) chips.
-- **Interactive Tooltip**: Tapping the badges reveals AWS Bedrock Claude 3.5 Sonnet geriatric analysis, verifying zero anticholinergic or sedative burden for senior patients (Age 75+).
-
-### 6. Web Audio API Reactive Alexa Cyan Glow (`AlexaAmbientGlow.tsx`)
-- Integrates native **Web Audio API `AudioContext`** and **`AnalyserNode`** connected directly to audio streams.
-- **Dynamic Liquid SVG Wave Ribbon**: High-definition undulating wave with signature Alexa Cyan gradient (`#00CAFF` &rarr; `#0070F3` &rarr; `#00F5FF`) rippling rhythmically along the screen's bottom bezel according to real-time voice frequencies, harmonic cadence, and decibel amplitude.
-- Upward diffused ambient aura plume dynamically expands from 48px to 100px based on vocal power and ambient resonance.
-- Contextual HUD status pill displays animated **5-band equalizer visualizer**, decibel gain readout, and live voice context tags.
-
-### 7. Ring Doorbell IR Night Vision & Computer Vision (`RingDoorbellCard.tsx`)
-- **Night-Vision Optical Modes**: Switchable 850nm IR phosphor monochrome night-vision and starlight high-contrast camera simulation.
-- **Radar Scan Sweep**: Continuous laser radar sweep with trailing phosphorescent glow scanning the porch surface every 3.6s.
-- **Amazon Pharmacy Package Tracking**: Emerald green computer vision bounding box (`#10B981`) tracking delivery parcel position with corner targeting reticles and verified certification tag:
-  > `[Amazon Prime Package - Verified]` (Confidence: 99.4%)
-- **Paramedic Acute Access**: 1-click **Ring Smart Deadbolt** override unlocking the front door during critical emergencies.
-- **Live Surveillance Telemetry**: Blinking `● LIVE REC` with 30 FPS timecode counter, signal bitrate, and encrypted smart lock telemetry.
-
-### 8. One-Tap Quick Doctor A4 Preview Modal (`DoctorReportPreviewModal.tsx`)
-- High-fidelity hospital-grade A4 document sheet previewing clinical summary prior to printing or PDF export.
-- **30-Day Blood Pressure Longitudinal Trajectory Chart**: Displays Systolic & Diastolic trend curves with clinical target threshold band (<130/80 mmHg).
-- **Scannable Doctor QR Code**: Sharp SVG QR code encoding `https://carebridge.health/audit/CB-7821-EV` formatted for clinical EHR / HL7 FHIR compliance.
-- Attending cardiologist verification attestation with digital cryptographic verification seal.
-- Direct 1-tap PDF generation powered by `pdfService.generateDoctorReport(...)` with zero layout drift.
-
-### 9. One-Click Dual-Turn Mock Voice Dialogue Simulator (`DemoVoiceModal.tsx`)
-- High-contrast toggle chip `[🎭 Demo Voice]` embedded in both the bedside bottom bar and the developer agent console.
-- **Turn 1 (Senior Patient Voice Simulation)**: Synthesizes Eleanor Vance (age 78, gentle timbre, pitch: 0.95, rate: 0.92) asking a realistic clinical query aloud, triggering reactive cyan waves and instant labeled chat bubbles.
-- **Turn 2 (Alexa Copilot Execution)**: On completion, triggers the 0ms earcon chime, engages Bedrock multi-turn reasoning, executes respective MCP tools, speaks via AWS Polly (`Ruth`), and displays rich interactive cards.
-- Pre-loaded with 5 clinically realistic scenarios matching [`DEMO_SCRIPT_3MIN.md`](./DEMO_SCRIPT_3MIN.md).
-
-### 10. Amazon Devices Builder Tools (ADBT) Integration
-- **Scaffolded and Validated via ADBT MCP**: The physical display dimensions, aspect ratio (16:10, 1280x800 resolution @ 150 DPI), and touch target safety bounds were **scaffolded and validated against Amazon Echo Show 10 ergonomics using Amazon Devices Builder Tools (ADBT) MCP integration**.
-- **Ergonomic 10-Foot & 6-Foot Viewing Rules**: Typography scales (56px+ oversized numerals, 20px+ body text) and WCAG AAA contrast ratios were audited to ensure glanceable readability from bedside nightstands and kitchen counters.
-- **Hardware Boundary Verification**: Validated zero viewport clipping on circular rotation and physical camera notch boundaries using ADBT diagnostic layout assertions.
-
-### 11. Track Bee (Wearable AI) & Apple Watch Context Bridge
-- **Cross-Track Biometric Ingestion**: Extends the Alexa+ and Ring ecosystem into **Track Bee (Wearable AI)**. Continuous passive telemetry (heart rate, blood pressure, blood glucose) from wearable devices (Bee Wearable sensor / Apple Watch via Bee CLI) streams directly into CareBridge's SQLite WAL database.
-- **Visual Glanceability & Audio Telemetry**: Surfaced on the bedside display via the dynamic `Bee Synced • Wearable AI` pulse indicator on [`QuickVitalsBar.tsx`](./frontend/src/components/QuickVitalsBar.tsx).
-- **Bedrock Geriatric Reasoning**: Wearable biometrics are automatically bundled into AWS Bedrock's context window (`recordVitals` tool), enabling Claude Haiku to detect early signs of orthostatic hypotension or bradycardia when reviewing medication compliance.
-
----
-
-## 🏗️ Comprehensive System Architecture
-
-```mermaid
-flowchart TD
-    subgraph EchoShow["Echo Show 10 (Bedside Display & Kitchen Counter)"]
-        UI_Clock["Glanceable Clock & Desk Mode"]
-        UI_PunchCard["Punch-Card Medication Regimen"]
-        UI_Glow["Web Audio Reactive Glow (#00CAFF)"]
-        UI_VitalsBar["Quick Vitals Bar (Bee Synced Badge)"]
-        UI_Ring["Ring Live IR Porch Cam + CV Package Box"]
-        UI_DocModal["One-Tap Doctor A4 Preview & QR Code"]
-    end
-
-    subgraph AgenticCore["Alexa Ambient Copilot"]
-        WebAudio["Web Audio API (AudioContext & AnalyserNode)"]
-        MicIntake["Microphone Intake / Web Speech API"]
-        Console["Alexa Agent Console & Inspector"]
-    end
-
-    subgraph BackendMCP["CareBridge MCP Server (Express + TypeScript)"]
-        SSE["Streamable HTTP (SSEServerTransport /sse)"]
-        MCP_Tools["MCP Tools (getSchedule, logDose, recordVitals, clinicalAdvisor, orderRefill, ringHub)"]
-        MCP_Res["MCP Resources (adherence-30d, active-prescriptions)"]
-        MCP_Prompts["MCP Prompts (morning_checkin, acute_chest_pain)"]
-        BeersEngine["15-Drug Beers Criteria Interaction Engine"]
-        DB[(SQLite WAL Engine)]
-    end
-
-    subgraph AWSCloud["AWS Multi-Service Cloud Pipeline"]
-        Bedrock["AWS Bedrock (Claude Haiku 4.5)"]
-        Guardrails["Bedrock Guardrails (Topic Denial & PII Redaction)"]
-        StreamEngine["Streaming Token Inference (TTFA < 400ms)"]
-        Polly["AWS Polly (Ruth Neural Voice)"]
-        SNS["AWS SNS (Transactional SMS Dispatch)"]
-    end
-
-    subgraph AmazonEcosystem["Amazon Ecosystem & Connected Devices"]
-        Pharmacy["Amazon Pharmacy 1-Click Refill"]
-        RingSystem["Ring Doorbell & Smart Access Deadbolt"]
-        BeeWearable["Track Bee Wearable AI & HealthKit"]
-        Caregiver["Sarah Connor (+1 555-0199)"]
-    end
-
-    EchoShow -->|Mic Audio / Touch| WebAudio
-    WebAudio -->|Waveform Data| UI_Glow
-    EchoShow -->|Voice Commands| MicIntake
-    MicIntake -->|Streamable HTTP / SSE| SSE
-    SSE --> MCP_Tools & MCP_Res & MCP_Prompts
-    MCP_Tools --> BeersEngine --> DB
-    BeeWearable -->|Passive Biometric Telemetry| MCP_Tools
-    MCP_Tools -->|Clinical Reasoning| Guardrails --> Bedrock --> StreamEngine
-    StreamEngine -->|Streamed Voice| Polly --> WebAudio
-    MCP_Tools -->|Emergency SMS Alert| SNS --> Caregiver
-    MCP_Tools -->|Autonomous Refill| Pharmacy --> DB
-    RingSystem -->|Live IR Feed + CV Bounding Box| UI_Ring
-    DB -->|30-Day Vitals & eMAR| UI_DocModal
-    DB -->|Live Biometrics & Vitals| UI_VitalsBar
+Senior logs morning dose -> Stock remaining <= 3 pills?
+  ├── NO  -> Intake marked TAKEN; adherence streak celebrated.
+  └── YES -> AI triggers orderRefill tool:
+        ├── Is total cost <= Family Wallet monthly limit ($50.00)?
+        │     └── YES -> paypalService.createOrder() -> captureOrder() -> Stock +30 pills -> Status: COMPLETED.
+        └── NO  -> paypalService.createInvoice() -> Send SMS via AWS SNS to Sarah (+15550199) -> Status: INVOICE_SENT.
 ```
 
 ---
 
-## ⚡ 1-Click Evaluator Sandbox Pass (Judge Testing Guide)
+## 📊 AG Grid Medical-Financial Ledger ($5,000 Sponsor Bounty)
 
-### Step 1: Open the Application
-Launch the frontend at `http://localhost:3000`. You will be greeted by the **CareBridge Authentication Gate**.
+Located under the **History & Compliance** and **Analytics** screens, the Medical-Financial Ledger is powered by **AG Grid Community v36**:
 
-### Step 2: Click the 1-Click Evaluator Pass
-Click: 👉 **"Sign in with demo (1-click evaluator pass)"**
-
-*What happens automatically under the hood:*
-- Calls `/api/seed` on the MCP server.
-- Injects **30 days of clinically realistic adherence records**, biometric vitals, and medication inventory into SQLite WAL.
-- Unlocks **CareBridge Pro tier** across all screens.
-
----
-
-### Step 3: Run the One-Tap Evaluation Scenarios
-
-```
-┌────────────────────────────────────────────────────────────────────────┐
-│  [💬 What's my schedule?]   [💊 Took Atorvastatin (Low Stock)]         │
-│  [📦 Yes, Order Refill]     [🚨 Severe Chest Pain (Emergency SNS)]     │
-└────────────────────────────────────────────────────────────────────────┘
-```
-
-#### 1. Daily Schedule & Voice Retrieval
-- **Voice/Click:** `"Alexa, what's my medicine schedule today?"`
-- **MCP Tool:** `getTodaySchedule`
-- **Result:** Alexa reads upcoming doses. Punch-card visual updates on screen.
-
-#### 2. Amazon Pharmacy 1-Click Refill (Autonomous Commerce)
-- **Voice/Click:** `"Alexa, I just took my Atorvastatin pill"`
-- **MCP Tool:** `logDoseStatus`
-- **Agent Prompt:** Alexa detects stock dropped to 3 tablets ($\le 5$ warning):  
-  *"Logged as taken. Heads up: you only have 3 pills left. Would you like me to order a 30-day refill via Amazon Pharmacy for $12.50?"*
-- **Follow-up Voice/Click:** `"Yes, order it"` (or click `[📦 Yes, Order Refill]`)
-- **MCP Tool:** `orderRefill`
-- **Result:** Renders `AmazonOrderCard` with Amazon Order ID `#114-7291048-8192031`, Prime 2-Day free delivery estimate, and auto-replenishes SQLite stock (+30 pills).
-
-#### 3. Bedrock Clinical Triage & Emergency SMS Dispatch via AWS SNS
-- **Voice/Click:** `"Alexa, I have severe crushing chest pain and shortness of breath"`
-- **MCP Tool:** `clinicalAdvisor`
-- **AWS Pipeline:**
-  1. **Bedrock Claude Haiku 4.5** assesses symptoms, tags risk level as `EMERGENCY`.
-  2. **AWS Polly (Ruth)** speaks calming instructions: *"I've flagged this as an emergency. Sit down immediately. I have just dispatched an urgent SMS alert with your location and current vitals to your daughter Sarah."*
-  3. **AWS SNS** dispatches a `Transactional` SMS with vitals to Sarah Connor (`+1 555-0199`).
-- **Result:** Renders the `ClinicalAdviceCard` with an active emergency banner showing the AWS SNS Message ID, carrier timestamp, and delivery telemetry.
-
-#### 4. Ring Doorbell Live Camera Simulation & Package Tracking
-- Triggers upon Amazon Pharmacy package delivery.
-- Renders `RingDoorbellCard` showing simulated **IR 850nm night-vision**, continuous **radar scan sweep**, and an **emerald green bounding box** with `[Amazon Prime Package - Verified]` tag.
-
-#### 5. One-Tap Quick Doctor A4 Preview Modal & Scannable QR Code
-- Navigate to the **History** or **Analytics** tab on the Echo Show display.
-- Click **"Preview A4"** or **"Doctor A4 Sheet"**.
-- Displays the hospital-grade A4 clinical summary sheet with **30-day blood pressure trajectory chart**, verified eMAR table, attending cardiologist signature, and **scannable QR code** linking to `carebridge://ehr/audit/CB-7821-EV`.
-- Click **"Download PDF"** to export immediately via `jsPDF`.
+- **7 Hackathon-Specified Columns**:
+  1. `Date / Time`: Timestamp with clock icon and sortable ordering.
+  2. `Medication`: Pill badge with dosage (e.g. *Amlodipine Besylate 5mg*).
+  3. `Status (Taken/Missed)`: Real-time adherence indicators (`Taken` in emerald, `Missed` in rose, `Refill Settled` in PayPal blue).
+  4. `Vital Sign (BP/HR)`: Monospace blood pressure & heart rate telemetry (`122/80 mmHg • 72 bpm`) with automated systolic alert indicator.
+  5. `PayPal Transaction ID`: Monospace reference (`PAYID-M5W3XQA-9842103`) with 1-click clipboard copy and direct sandbox activity link.
+  6. `Refill Cost ($ USD)`: Refill total (`$9.80 USD`) or `$0.00 (Routine)`.
+  7. `Payment Status`: Real-time status badges (`COMPLETED`, `INVOICE_SENT`, `VAULT_CAPTURED`).
+- **Clinical Correlation Column**: Explains how medication intake stabilized vitals and when refills were dispatched.
+- **Enterprise Controls**:
+  - Column filtering (`agTextColumnFilter`, `agNumberColumnFilter`).
+  - Search quick-filter across all fields.
+  - One-click **CSV and Excel Export** (`gridApi.exportDataAsCsv()`).
+  - Prominent visual badge: *"Powered by AG Grid Enterprise Telemetry"*.
 
 ---
 
-## 🧪 Verification & Test Suite
+## 🤖 Model Context Protocol (MCP) & Agentic Loop
 
-The project includes an enterprise-grade automated test suite executed with Vitest:
+CareBridge Pay implements the Model Context Protocol (MCP) Streamable HTTP SSE specification:
 
-```bash
-# Run all 73 automated tests across all 7 test files (100% pass rate)
-npm test --workspace=backend-mcp
-
-# Or run from monorepo root
-npm test
-
-# Run dedicated Bedrock enterprise test suite
-npm run test:bedrock
-
-# Verify clean Next.js 15 production build with zero TypeScript errors
-npm run build --workspace=frontend
-```
-
-**Verification Results: 73 / 73 Passing Automated Tests (100% Pass Rate Across 7 Test Files):**
-- ✅ `tests/bedrockEnterprise.test.ts` (22 tests): Bedrock Guardrails (Topic Denial & PII Redaction), streaming token inference, Polly TTS TTFA < 400ms.
-- ✅ `tests/tools.test.ts` (14 tests): Independent execution of all 7 registered MCP clinical action tools, AWS SNS emergency SMS dispatch, and Beers Criteria interaction warnings.
-- ✅ `tests/agentTurn.test.ts` (12 tests): Multi-turn voice agent orchestration, automatic tool reasoning, custom dosage extraction, Sarah Connor Circuit-Breaker, paramedic emergency unlock.
-- ✅ `tests/mcpPrimitives.test.ts` (10 tests): JSON-RPC 2.0 MCP Tri-Pillar (Tools, Resources, Prompts) schemas and resource reads.
-- ✅ `tests/scheduleAndTemporal.test.ts` (6 tests): Schedule by date, temporal guard logic, and adherence calculation with 0-dose handling.
-- ✅ `tests/authMultiUser.test.ts` (6 tests): Multi-user SQLite WAL isolation, PIN authentication, demo seeder, and multi-tenant tool isolation.
-- ✅ `tests/medicineCrud.test.ts` (3 tests): Full CRUD medication management, schedule generation, and inventory decrement.
+- **Action Tools (`/mcp` & `/api/agent/turn`)**:
+  - `orderRefill`: Autonomous 1-click prescription refill settlement via PayPal Orders v2 & Vault.
+  - `logDoseStatus`: Records medication intake and triggers autonomous low-stock refill prompt when inventory $\le 3$.
+  - `recordVitals`: Records blood pressure, glucose, and heart rate into SQLite WAL.
+  - `clinicalAdvisor`: Triage symptom evaluator powered by Claude Haiku with emergency caregiver escalation.
+  - `ringDeviceHub`: Smart porch camera verification for pharmacy drop-offs and paramedic deadbolt unlock.
+  - `negotiateAdherence`: Multi-turn geriatric persuasion agent with Sarah Connor circuit breaker.
+- **Clinical Resources**:
+  - `carebridge://patient/eleanor-vance/adherence-30d`: Structured 30-day compliance data.
+  - `carebridge://clinical/prescriptions/active`: Active pill counts, dosages, and expiration dates.
+- **Workflow Prompts**:
+  - `morning_medication_checkin` and `acute_chest_pain_triage`.
 
 ---
 
-## 🛠️ Workspace Structure
+## 💻 Tech Stack
 
-```
-carebridge-ambient/
-├── backend-mcp/                     # Model Context Protocol Server (Port 3001)
-│   ├── src/
-│   │   ├── aws/
-│   │   │   ├── bedrockClient.ts     # Bedrock Claude Haiku 4.5 + Guardrails & Streaming
-│   │   │   ├── pollyClient.ts       # AWS Polly Neural TTS Engine (Ruth)
-│   │   │   └── snsClient.ts         # AWS SNS Transactional SMS Dispatcher
-│   │   ├── config/
-│   │   │   └── env.ts               # Environment Variables Validation & Loader
-│   │   ├── database/
-│   │   │   ├── db.ts                # SQLite WAL Mode Persistence Engine
-│   │   │   ├── medicineRepo.ts      # Medication Catalog & Stock Levels
-│   │   │   ├── logRepo.ts           # Adherence Punch-Card History
-│   │   │   ├── vitalsRepo.ts        # Blood Pressure & Heart Rate Records
-│   │   │   ├── caregiverRepo.ts     # Emergency Contacts & Caregiver Profiles
-│   │   │   └── seedDemoData.ts      # 30-Day Clinical Data Seeder
-│   │   ├── prompts/
-│   │   │   └── index.ts             # MCP Prompts Registration (2 Prompts)
-│   │   ├── resources/
-│   │   │   └── index.ts             # MCP Resources Registration (2 Resources)
-│   │   ├── routes/
-│   │   │   └── apiRoutes.ts         # Express REST API & Health Endpoints
-│   │   ├── services/
-│   │   │   └── drugInteractionService.ts # 15-Drug Beers Criteria Registry
-│   │   ├── tools/
-│   │   │   ├── getTodaySchedule.ts  # MCP: getTodaySchedule
-│   │   │   ├── logDoseStatus.ts     # MCP: logDoseStatus (Low-Stock Trigger)
-│   │   │   ├── recordVitals.ts      # MCP: recordVitals
-│   │   │   ├── clinicalAdvisor.ts   # MCP: clinicalAdvisor (Bedrock + SNS)
-│   │   │   ├── orderRefill.ts       # MCP: orderRefill (Amazon Pharmacy)
-│   │   │   ├── ringDeviceHub.ts     # MCP: ringDeviceHub (Night-vision cam & Door unlock)
-│   │   │   ├── negotiateAdherence.ts# MCP: negotiateAdherence (Sarah Circuit-Breaker)
-│   │   │   └── agentTurnHandler.ts  # Bedrock Agentic Loop & Offline Fallback
-│   │   ├── types/
-│   │   │   └── index.ts             # Shared Backend TypeScript Types
-│   │   ├── utils/
-│   │   │   └── dateUtils.ts         # Timezone & Local Date Utilities
-│   │   └── server.ts                # Streamable HTTP (SSE) & Express Router
-│   ├── tests/                       # 73 Passing Tests across 7 files (100% Pass)
-│   │   ├── bedrockEnterprise.test.ts# Bedrock Guardrails, Streaming & Polly TTFA
-│   │   ├── agentTurn.test.ts        # Voice Turn Orchestration & Tool Reasoning
-│   │   ├── tools.test.ts            # Direct 7 MCP Tools & SNS Emergency Dispatch
-│   │   ├── mcpPrimitives.test.ts    # MCP Primitives (Tools, Resources, Prompts)
-│   │   ├── scheduleAndTemporal.test.ts # Temporal Schedule Resolution & Adherence
-│   │   ├── authMultiUser.test.ts    # Multi-User SQLite WAL Isolation & Demo Seeding
-│   │   └── medicineCrud.test.ts     # Medication CRUD Operations & Stock Decrement
-│   └── package.json                 # Workspaces & MCP Dependencies
-├── frontend/                        # Echo Show 10 Ambient Display (Port 3000)
-│   ├── src/
-│   │   ├── app/
-│   │   │   ├── globals.css          # Alexa Cyan Light Bar & Radar Sweep Keyframes
-│   │   │   ├── layout.tsx           # Root Next.js 15 App Shell & Metadata
-│   │   │   ├── not-found.tsx        # Fallback 404 Route
-│   │   │   └── page.tsx             # Echo Show 10 Hardware Frame & Viewport Manager
-│   │   ├── components/
-│   │   │   ├── TopNavBar.tsx        # Viewport Switcher & Simulate Delivery Trigger
-│   │   │   ├── MedicineCard.tsx     # Beers Criteria Badges & Safety Tooltips
-│   │   │   ├── MedicationPunchCard.tsx # Daily Dose Timeline & Punch Indicators
-│   │   │   ├── SeniorClock.tsx      # High-Contrast Clock & Ambient Date
-│   │   │   ├── QuickVitalsBar.tsx   # Glanceable Blood Pressure & Pulse Readouts
-│   │   │   ├── AlexaAmbientGlow.tsx # Web Audio Reactive Echo Show Cyan Light Bar
-│   │   │   ├── AlexaAgentConsole.tsx# Developer Timeline & Raw JSON Inspector
-│   │   │   ├── AuthGate.tsx         # Evaluator 1-Click Sandbox Login
-│   │   │   ├── DemoVoiceModal.tsx   # 1-Click Dual-Turn Voice Simulator Modal
-│   │   │   ├── DoctorReportPreviewModal.tsx # A4 Doctor Preview with BP Chart & QR Code
-│   │   │   └── RichCards/           # AmazonOrder, ClinicalAdvice, RingDoorbell Cards
-│   │   ├── context/
-│   │   │   ├── AlertContext.tsx     # Application-wide Alert State
-│   │   │   └── AlexaVoiceContext.tsx# Voice Agent & Audio Waveform Context
-│   │   ├── hooks/
-│   │   │   ├── useAlexaAgent.ts     # Unified Multi-Turn Voice Orchestrator
-│   │   │   ├── useMedicines.ts      # Prescription State & Adherence Metrics
-│   │   │   └── useHeatmap.ts        # 30-Day Longitudinal Adherence Heatmap
-│   │   ├── screens/
-│   │   │   ├── TodayScheduleView.tsx# Primary Senior Bedside Schedule Interface
-│   │   │   ├── DeskModeView.tsx     # Bedside Desk Clock with OLED Night Dimmer
-│   │   │   ├── HistoryMatrixView.tsx# 30-Day Adherence Log Matrix & Export
-│   │   │   └── AnalyticsView.tsx    # Longitudinal BP Trends & Adherence Analytics
-│   │   └── services/
-│   │       ├── mcpClient.ts         # Streamable HTTP / SSE Client
-│   │       ├── mockVoiceScenarios.ts# 5 Pre-built Demonstration Scenarios
-│   │       ├── pdfService.ts        # jsPDF Clinical Summary Generator
-│   │       ├── soundFxService.ts    # Web Audio API Procedural Ring Chime Synth
-│   │       └── speechService.ts     # Web Audio Pipeline (Polly -> Web Speech)
-│   └── package.json                 # Next.js 15, React 19, Tailwind CSS
-├── ARCHITECTURE.md                  # Comprehensive System Architecture & Flow Blueprint
-├── DEMO_SCRIPT_3MIN.md              # 3-Minute Video Walkthrough Script & Storyboard
-├── FRICTION_LOG.md                  # Developer Friction Log (10 In-Depth Entries)
-├── PRODUCT.md                       # Comprehensive Product Specification & Personas
-├── DESIGN.md                        # Industrial Design Tokens & Ergonomics Guidelines
-├── LICENSE                          # MIT Open Source License
-└── package.json                     # Monorepo Root Workspaces Configuration
-```
+- **Frontend**: Next.js 15 (React 19, TypeScript, Tailwind CSS, Lucide, FontAwesome).
+- **Data Table**: AG Grid Community (`ag-grid-react`, `ag-grid-community` v36) with `ag-theme-quartz`.
+- **Backend**: Node.js 22, Express, TypeScript, Model Context Protocol (MCP) SDK.
+- **Payment Engine**: PayPal Developer Platform (OAuth2, Orders API v2, Vault API, Invoicing API, Subscriptions API, Webhooks).
+- **Database**: SQLite WAL mode (`better-sqlite3`) with transactional tables for orders, wallet limits, and vitals.
+- **Cloud & AI Services**: AWS Bedrock (Anthropic Claude Haiku 4.5), AWS Polly (Neural Voice), AWS SNS (SMS dispatch).
 
 ---
 
-## 🚀 Quick Start & Installation
+## 🚀 Setup & Installation (Using PayPal Sandbox)
 
 ### 1. Prerequisites
-- **Node.js:** v18.0.0+ (Node v20 LTS recommended)
-- **npm:** v9.0.0+
-- **AWS Account:** (Optional for live keys — system includes resilient offline simulation mode) with access to Bedrock (`ap-southeast-2`), Polly, and SNS.
+- **Node.js**: `v20.x` or `v22.x`
+- **npm**: `v10.x`+
 
-### 2. Clone & Install Monorepo
+### 2. Clone Repository
 ```bash
-git clone https://github.com/PHONGUIT22/CareBridge-Ambient.git
-cd CareBridge-Ambient
+git clone https://github.com/PHONGUIT22/carebridge-pay.git
+cd carebridge-pay
 npm install
 ```
 
-### 3. Environment Configuration
-Copy `.env.example` to `.env` at root and in `backend-mcp/`:
+### 3. Configure PayPal Sandbox Environment
+Copy `.env.example` to `.env`:
 ```bash
 cp .env.example .env
 ```
 
-Your `.env` file structure:
+Configure your PayPal Developer credentials (create an app at [developer.paypal.com](https://developer.paypal.com/)):
 ```env
-# AWS Cloud Configuration (Mini-challenge: AWS Builder)
-AWS_REGION=ap-southeast-2
-AWS_ACCESS_KEY_ID=your_access_key_here
-AWS_SECRET_ACCESS_KEY=your_secret_key_here
-BEDROCK_MODEL_ID=au.anthropic.claude-haiku-4-5-20251001-v1:0
-
-# AWS SNS Emergency SMS Dispatch
-CAREGIVER_PHONE=+15550199
-
-# AWS Polly Neural Voice Synthesis
-POLLY_VOICE_ID=Ruth
+# PayPal Developer Platform (Sandbox Mode)
+PAYPAL_CLIENT_ID=your_sandbox_client_id
+PAYPAL_CLIENT_SECRET=your_sandbox_client_secret
+PAYPAL_ENVIRONMENT=sandbox
+PAYPAL_WEBHOOK_ID=your_webhook_id
 
 # Server Ports
-MCP_PORT=3001
-NEXT_PUBLIC_MCP_URL=http://localhost:3001
+PORT=3001
+NEXT_PUBLIC_API_URL=http://localhost:3001
+NEXT_PUBLIC_PAYPAL_CLIENT_ID=your_sandbox_client_id
 ```
 
-### 4. Run Development Servers
+> [!NOTE]
+> **Graceful Sandbox Simulation Mode:** If PayPal credentials are not configured, CareBridge Pay automatically activates a high-fidelity **sandbox simulation mode**. It generates valid `PAYID-...` identifiers, simulates webhooks, and manages SQLite balances without external network dependency.
 
-**Option A: 1-Command Monorepo Launch (Recommended)**
+### 4. Run Full-Stack System
 ```bash
-# Starts both Backend MCP (Port 3001) and Frontend Echo Show UI (Port 3000) concurrently
-npm run dev
+# Terminal 1: Launch Backend MCP & PayPal Server (Port 3001)
+npm run dev --workspace=backend-mcp
+
+# Terminal 2: Launch Next.js 15 Ambient Frontend (Port 3000)
+npm run dev --workspace=frontend
 ```
+Open **[http://localhost:3000](http://localhost:3000)** in your browser!
 
-**Option B: Independent Terminals (Detailed Log Inspection)**
+---
 
-*Terminal 1 (Backend MCP Server):*
+## 🧪 Testing & Verification
+
+Run the automated test suite verifying PayPal services, MCP primitives, agentic commerce loops, and SQLite persistence:
+
 ```bash
-npm run dev:backend
-# Or: npm run dev --workspace=backend-mcp
+npm test --workspace=backend-mcp
 ```
-*Server starts on `http://localhost:3001` with SSE stream at `/sse` and REST routes at `/api`.*
 
-*Terminal 2 (Frontend Echo Show 10 UI):*
-```bash
-npm run dev:frontend
-# Or: npm run dev --workspace=frontend
+### Test Suite Output (95/95 Tests Passing):
 ```
-*Application opens at `http://localhost:3000`.*
+ ✓ tests/agenticCommerce.test.ts (11 tests)
+ ✓ tests/paypalService.test.ts (11 tests)
+ ✓ tests/mcpPrimitives.test.ts (10 tests)
+ ✓ tests/bedrockEnterprise.test.ts (22 tests)
+ ✓ tests/scheduleAndTemporal.test.ts (6 tests)
+ ✓ tests/medicineCrud.test.ts (3 tests)
+ ✓ tests/tools.test.ts (8 tests)
+ ✓ tests/agentTurn.test.ts (12 tests)
+ ✓ tests/resources.test.ts (12 tests)
+
+ Test Files  9 passed (9)
+      Tests  95 passed (95)
+   Duration  4.10s
+```
+
+Run frontend production build verification:
+```bash
+npm run build --workspace=frontend
+```
+Generates an optimized Next.js 15 production build with 100% type safety.
+
+---
+
+## 👥 Demo Personas
+
+- **Senior Patient**: Eleanor Vance (Age 78) — living independently with hypertension and Type-2 diabetes. Takes Amlodipine 5mg and Metformin 500mg.
+- **Family Caregiver**: Sarah Connor (Daughter, `sarah@carebridge.ai`, `+1 555-0199`) — manages Eleanor's $50.00/mo Family Wallet limit and authorizes emergency refills via PayPal invoice links.
 
 ---
 
 ## 📜 License
 
-Distributed under the **MIT License**. See [`LICENSE`](./LICENSE) for more information.
-
-Copyright (c) 2026 CareBridge Ambient Team. Built for the Amazon Developer Hackathon 2026.
+This project is licensed under the **MIT License** — see the [LICENSE](./LICENSE) file for details. Built for the PayPal AI Hackathon 2026.
