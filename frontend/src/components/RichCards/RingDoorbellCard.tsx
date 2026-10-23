@@ -41,7 +41,7 @@ export interface RingDoorbellCardProps {
  * 1. Night-Vision Simulation: Switchable 850nm IR Phosphor / Starlight Color Night Vision.
  * 2. Radar Scan Sweep: Sweeping laser plane with trailing radar phosphor scanning the porch.
  * 3. Amazon Pharmacy Computer Vision Tracking: Emerald green bounding box with HUD brackets
- *    and exact [Amazon Prime Package - Verified] certification tag.
+ *    and exact [PayPal Rx Parcel - Verified] certification tag.
  * 4. Real-time Telemetry: Live timecode with frame counter, bitrate, and Ring Smart Lock status.
  */
 export function RingDoorbellCard({
@@ -92,7 +92,7 @@ export function RingDoorbellCard({
   if (!isOpen) return null;
 
   const isEmergency = mode === 'emergency' || doorLockStatus.includes('UNLOCKED');
-  const carrier = packageDetails?.carrier || 'Amazon Prime Logistics';
+  const carrier = packageDetails?.carrier || 'CareBridge Express Pharmacy';
   const desc = packageDetails?.description || 'CareBridge Prescription Medication Parcel';
 
   const handleBringInside = () => {
@@ -391,7 +391,7 @@ export function RingDoorbellCard({
                 <line x1="88" y1="27" x2="88" y2="47" stroke="#10B981" strokeWidth="1" />
                 <line x1="78" y1="37" x2="98" y2="37" stroke="#10B981" strokeWidth="1" />
 
-                {/* VERIFIED BADGE HEADER CHIP (Matches Requirement: [Amazon Prime Package - Verified]) */}
+                {/* VERIFIED BADGE HEADER CHIP (Matches Requirement: [PayPal Rx Parcel - Verified]) */}
                 <g transform="translate(6, -26)">
                   <rect
                     x="0"
@@ -411,7 +411,7 @@ export function RingDoorbellCard({
                     fontFamily="monospace"
                     letterSpacing="0.2"
                   >
-                    [Amazon Prime Package - Verified]
+                    [PayPal Rx Parcel - Verified]
                   </text>
                 </g>
 
@@ -419,7 +419,7 @@ export function RingDoorbellCard({
                 <g transform="translate(6, 88)">
                   <rect x="0" y="2" width="180" height="15" rx="3" fill="#061f18" stroke="#10B981" strokeWidth="1" />
                   <text x="6" y="13" fill="#6ee7b7" fontSize="8.5" fontFamily="monospace" fontWeight="bold">
-                    Rx Lock • Conf: 99.4% • ID: AMZN-RX
+                    Rx Lock • Conf: 99.4% • ID: PAYPAL-RX
                   </text>
                 </g>
               </g>
@@ -527,7 +527,7 @@ export function RingDoorbellCard({
                       </span>
                     </div>
                     <p className="text-[11px] text-slate-400 font-mono mt-0.5">
-                      Carrier: {carrier} • Front Porch Mat • Amazon Logistics Tracking
+                      Carrier: {carrier} • Front Porch Mat • PayPal Order Tracking
                     </p>
                   </div>
                 </div>

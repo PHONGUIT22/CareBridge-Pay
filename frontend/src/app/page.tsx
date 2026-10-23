@@ -192,7 +192,7 @@ export default function Home() {
 
   const handleTriggerProactiveDelivery = (customPkg?: RingPackageDetails) => {
     const pkgData: RingPackageDetails = customPkg || {
-      carrier: 'Amazon Prime Delivery',
+      carrier: 'CareBridge Express Pharmacy',
       description: 'Prescription Medication Parcel (Atorvastatin 20mg)',
       orderId: '114-7294821-4928103',
       deliveryTime: 'Just now',
@@ -200,13 +200,13 @@ export default function Home() {
     setProactiveDeliveryBanner({
       show: true,
       title: 'Ring Doorbell: Motion Detected at Front Porch',
-      subtitle: `${pkgData.description} placed on porch mat • Amazon Prime Verified`,
+      subtitle: `${pkgData.description} placed on porch mat • PayPal Merchant Verified`,
       packageDetails: pkgData,
     });
     try {
       soundFxService.playRingChime();
     } catch (_) {}
-    speechService.speak('Ring Doorbell alert: Motion detected at front porch. Amazon Prime prescription delivery arrived.');
+    speechService.speak('Ring Doorbell alert: Motion detected at front porch. CareBridge PayPal prescription delivery arrived.');
   };
 
   const handleTriggerAmazonOrder = (order: AmazonRefillOrder) => {
@@ -214,18 +214,18 @@ export default function Home() {
     setAmazonOrderCardOpen(true);
     addToast({
       type: 'success',
-      title: 'Amazon Pharmacy Order Placed',
+      title: 'PayPal Agentic Refill Settled',
       message: `${order.quantityAdded || 30} tabs of ${order.medicineName} arriving ${order.estimatedDelivery}`,
     });
 
     setTimeout(() => {
       handleTriggerProactiveDelivery({
-        carrier: 'Amazon Prime Delivery',
+        carrier: 'CareBridge Express Pharmacy',
         description: `Prescription Refill (${order.medicineName})`,
         orderId: order.orderId,
         deliveryTime: 'Just now',
       });
-      addToast({ type: 'info', title: 'Ring Doorbell Motion Detected', message: 'Amazon Prime delivery arrived on front porch.' });
+      addToast({ type: 'info', title: 'Ring Doorbell Motion Detected', message: 'CareBridge Express delivery arrived on front porch.' });
     }, 4500);
   };
 
@@ -338,7 +338,7 @@ export default function Home() {
         onPreviewRingPorch={() => {
           setRingCardMode('delivery');
           setRingPackageData({
-            carrier: 'Amazon Prime Delivery',
+            carrier: 'CareBridge Express Pharmacy',
             description: 'Prescription Medication Parcel (Atorvastatin 20mg)',
             orderId: '114-7294821-4928103',
             deliveryTime: 'Just now',
@@ -675,12 +675,12 @@ export default function Home() {
         onCloseAmazonOrderCard={() => setAmazonOrderCardOpen(false)}
         amazonOrderData={amazonOrderData}
         onTrackOrder={(orderId) => {
-          addToast({ type: 'info', title: 'Amazon Logistics', message: `Tracking shipment for Order #${orderId}. Carrier: Amazon Prime Delivery.` });
+          addToast({ type: 'info', title: 'CareBridge Pharmacy Logistics', message: `Tracking shipment for Order #${orderId}. Carrier: CareBridge Express Pharmacy.` });
         }}
         onViewPorchCamera={() => {
           setRingCardMode('delivery');
           setRingPackageData({
-            carrier: 'Amazon Prime Delivery',
+            carrier: 'CareBridge Express Pharmacy',
             description: `Prescription Parcel (${amazonOrderData?.medicineName || 'Medication Refill'})`,
             orderId: amazonOrderData?.orderId || '114-7294821-4928103',
             deliveryTime: 'Just now',

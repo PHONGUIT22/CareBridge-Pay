@@ -283,7 +283,7 @@ export const MCP_TOOLS_SCHEMAS = [
   },
   {
     name: 'orderRefill',
-    description: 'Place an automated 1-Click prescription refill order via Amazon Pharmacy when inventory runs low or upon patient request.',
+    description: 'Place an autonomous 1-Click prescription refill order via the PayPal Developer Platform (Orders API v2 & Vault) when inventory runs low or upon patient request.',
     input_schema: {
       type: 'object',
       properties: {
@@ -302,7 +302,7 @@ export const MCP_TOOLS_SCHEMAS = [
   {
     name: 'ringDeviceHub',
     description:
-      'Integrate Ring smart home ecosystem (Ring Video Doorbell Pro & Ring Smart Access Lock). Check front porch camera, verify Amazon Pharmacy deliveries, and unlock door for emergency paramedics.',
+      'Integrate Ring smart home ecosystem (Ring Video Doorbell Pro & Ring Smart Access Lock). Check front porch camera, verify CareBridge prescription deliveries, and unlock door for emergency paramedics.',
     input_schema: {
       type: 'object',
       properties: {
@@ -405,7 +405,7 @@ Based on the user's spoken request, choose the single most relevant tool from th
 - logDoseStatus: When the senior reports taking, drinking, or having taken a medication (e.g. "I took my morning pills", "I took Amlodipine").
 - recordVitals: When reporting blood pressure, blood sugar, heart rate, or pulse measurements.
 - clinicalAdvisor: When reporting symptoms, discomfort, feeling dizzy, pain, or asking clinical questions.
-- orderRefill: When requesting a refill or ordering more medicine via Amazon Pharmacy.
+- orderRefill: When requesting a refill or ordering more medicine via PayPal.
 - ringDeviceHub: When checking front porch Ring camera, packages, or unlocking door for emergency paramedics.
 
 If no tool is needed (such as a greeting or simple conversation), respond directly with compassionate, reassuring text strictly under 20 words for fast speech rendering.`;

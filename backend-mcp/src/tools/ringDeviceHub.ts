@@ -35,7 +35,7 @@ export const ringDeviceHubTool = {
   definition: {
     name: 'ringDeviceHub',
     description:
-      'Integrate Ring smart home ecosystem (Ring Video Doorbell Pro & Ring Smart Access Lock). Check front porch camera, verify Amazon Pharmacy deliveries, and unlock door for emergency paramedics.',
+      'Integrate Ring smart home ecosystem (Ring Video Doorbell Pro & Ring Smart Access Lock). Check front porch camera, verify CareBridge prescription deliveries, and unlock door for emergency paramedics.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -84,7 +84,7 @@ export const ringDeviceHubTool = {
     }
 
     // Default action: checkFrontPorch (Inspect front porch camera & detect prescription parcel)
-    const speechText = 'Ring Doorbell: Amazon Pharmacy package delivered at your front porch.';
+    const speechText = 'Ring Doorbell: CareBridge PayPal prescription package delivered at your front porch.';
     return {
       success: true,
       action: 'checkFrontPorch',
@@ -93,7 +93,7 @@ export const ringDeviceHubTool = {
       motionDetected: true,
       packageDetected: true,
       packageDetails: {
-        carrier: 'Amazon Prime Delivery',
+        carrier: 'CareBridge Express Pharmacy',
         description: 'CareBridge Prescription Refill Parcel (30 Tablets)',
         deliveryTime: 'Just now',
         orderId: '114-7294821-4928103',
@@ -107,7 +107,7 @@ export const ringDeviceHubTool = {
         doorLockStatus: 'LOCKED',
         packageDetected: true,
         packageDetails: {
-          carrier: 'Amazon Prime Delivery',
+          carrier: 'CareBridge Express Pharmacy',
           description: 'CareBridge Prescription Refill Parcel (30 Tablets)',
           deliveryTime: 'Just now',
           orderId: '114-7294821-4928103',
