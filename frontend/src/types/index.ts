@@ -159,9 +159,10 @@ export interface ClinicalAdviceResponse {
   error?: string;
 }
 
-export interface AmazonRefillOrder {
+export interface PayPalRefillOrder {
   success: boolean;
   orderId: string;
+  paypalCaptureId?: string;
   medicineName: string;
   dosage: string;
   quantityAdded: number;
@@ -169,20 +170,97 @@ export interface AmazonRefillOrder {
   newStockCount: number;
   estimatedDelivery: string;
   totalPrice: string;
-  pharmacyName: string;
-  shippingMethod: string;
+  currency?: string;
+  paymentMethod?: string;
+  paymentStatus?: 'COMPLETED' | 'INVOICE_SENT' | 'PENDING';
+  familyWalletSpent?: number;
+  familyWalletRemaining?: number;
+  invoiceUrl?: string;
+  pharmacyName?: string;
+  shippingMethod?: string;
   speechText: string;
   richCard?: {
-    type: string;
+    type: 'PayPalOrderReceipt' | 'PayPalInvoiceReceipt' | string;
     orderId: string;
+    paypalCaptureId?: string;
     medicineName: string;
     dosage: string;
     quantity: number;
     totalPrice: string;
-    estimatedDelivery: string;
-    shippingMethod: string;
-    pharmacyName: string;
-    newStockCount: number;
+    currency?: string;
+    estimatedDelivery?: string;
+    shippingMethod?: string;
+    pharmacyName?: string;
+    paymentMethod?: string;
+    paymentStatus?: string;
+    newStockCount?: number;
+    invoiceUrl?: string;
+  };
+  error?: string;
+}
+
+// Backward-compatible alias for previous AmazonRefillOrder references
+export type AmazonRefillOrder = PayPalRefillOrder;
+
+export interface PayPalTransaction {
+  id: string;
+  userId: string;
+  orderId: string;
+  paypalCaptureId?: string | null;
+  medicineId?: string | null;
+  medicineName: string;
+  quantity?: number;
+  amount: number;
+  currency: string;
+  status: 'PENDING' | 'COMPLETED' | 'INVOICE_SENT' | 'FAILED' | 'REFUNDED';
+  type?: 'refill' | 'subscription' | 'emergency';
+  invoiceUrl?: string | null;
+  note?: string | null;
+  payerEmail?: string | null;
+  createdAt: string;
+  updatedAt?: string;
+}
+
+export interface WalletStatus {
+  success: boolean;
+  monthlyLimit: number;
+  monthlySpent: number;
+  remaining: number;
+  vaultId?: string | null;
+  caregiverEmail?: string | null;
+}
+
+export interface MedicalLedgerRow {
+  id: string;
+  timestamp: string;
+  formattedDate: string;
+  dateTime: string;
+  category: 'PAYPAL_ORDER' | 'PAYPAL_INVOICE' | 'SUBSCRIPTION' | 'MED_TAKEN' | 'MED_SKIPPED' | 'VITAL_BP' | 'VITAL_SUGAR' | 'VITAL_HR';
+  medication: string;
+  item: string;
+  adherenceStatus: string;
+  vitalSign: string;
+  paypalTxId: string;
+  orderId?: string;
+  paypalCaptureId?: string;
+  refillCost: number;
+  amount: number;
+  paymentStatus: string;
+  status: string;
+  paymentMethod: string;
+  clinicalCorrelation: string;
+  raw?: any;
+}
+
+export interface SubscriptionResponse {
+  success: boolean;
+  subscription: {
+    subscriptionId: string;
+    status: string;
+    tierName: string;
+    pricePerMonth: number;
+    approvalUrl?: string;
+    startTime: string;
   };
   error?: string;
 }
@@ -295,6 +373,7 @@ export interface GuardianNegotiationResult {
   richCard: GuardianNegotiationCardData;
   error?: string;
 }
+
 export interface RingPackageDetails {
   carrier?: string;
   description?: string;

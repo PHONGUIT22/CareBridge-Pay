@@ -265,13 +265,17 @@ export function TodayScheduleView({
         </h1>
 
         {/* 2. HERO COMPLIANCE GRADIENT CARD (MATCHES image/3.png & image/6.png) */}
-        <div className="bg-gradient-to-br from-[#1E40AF] via-[#1E3A8A] to-[#2563EB] text-white rounded-2xl py-3 px-4 shadow-[0_8px_20px_rgba(30,58,138,0.2)] relative overflow-hidden">
+        <div className="bg-gradient-to-br from-[#003087] via-[#00457C] to-[#0070BA] text-white rounded-2xl py-3.5 px-4 shadow-[0_8px_24px_rgba(0,112,186,0.22)] relative overflow-hidden">
           <div className="flex items-start justify-between gap-3">
             <div>
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                <span className="text-[10px] font-bold uppercase tracking-wider text-sky-200 font-mono">
-                  DAILY COMPLIANCE
+                <span className="text-[10px] font-bold uppercase tracking-wider text-[#FFC439] font-mono">
+                  CAREBRIDGE PAY COMPLIANCE
+                </span>
+                <span className="hidden sm:inline-flex items-center gap-1 px-2 py-0.2 rounded-full bg-white/15 text-white text-[9px] font-mono border border-white/20">
+                  <FontAwesomeIcon icon={faShieldHalved} className="text-[#FFC439] text-[8px]" />
+                  <span>PayPal Verified</span>
                 </span>
               </div>
               <h2 className="text-lg sm:text-xl font-bold text-white mt-0.5">

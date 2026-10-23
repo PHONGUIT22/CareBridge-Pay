@@ -12,7 +12,7 @@ import { ToastContainer, ToastMessage } from '../components/Toast';
 import { AuthGate } from '../components/AuthGate';
 import { PaywallModal } from '../components/PaywallModal';
 import { OnboardingModal } from '../components/OnboardingModal';
-import { AlexaAmbientGlow } from '../components/AlexaAmbientGlow';
+import { AmbientVoiceGlow } from '../components/AmbientVoiceGlow';
 import { DemoVoiceModal } from '../components/DemoVoiceModal';
 import { MockVoiceScenario } from '../services/mockVoiceScenarios';
 import {
@@ -103,8 +103,8 @@ export default function Home() {
       type: 'success',
       title: `Welcome, ${session.user}!`,
       message: session.isPro
-        ? 'CareBridge Ambient Pro Activated (Unlimited Sync & AWS SNS Alerts).'
-        : 'CareBridge Ambient Ready (Evaluator Mode).',
+        ? 'CareBridge Pay Pro Activated (Unlimited Sync & AWS SNS Alerts).'
+        : 'CareBridge Pay Ready (Evaluator Mode).',
     });
   };
 
@@ -523,11 +523,11 @@ export default function Home() {
               <div className={`shrink-0 w-full px-3 pb-2 pt-1 bg-gradient-to-t ${isDeskClock ? 'from-[#050811] via-[#050811]' : 'from-[#F8FAFC] via-[#F8FAFC]'} to-transparent z-30`}>
                 <nav className={`relative rounded-2xl px-4 py-2 flex items-center justify-between border shadow-lg backdrop-blur-md transition-colors duration-300 ${isDeskClock ? 'bg-[#0B1528]/95 border-slate-800 text-slate-300' : 'bg-white/95 border-slate-200/80 text-slate-700 shadow-[0_10px_30px_rgba(0,0,0,0.08)]'}`}>
                   <div className="flex items-center gap-5 pl-1">
-                    <button onClick={() => setActiveTab('caregiver')} className={`flex flex-col items-center transition-all ${activeTab === 'caregiver' ? 'text-[#1E3A8A] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
+                    <button onClick={() => setActiveTab('caregiver')} className={`flex flex-col items-center transition-all ${activeTab === 'caregiver' ? 'text-[#003087] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
                       <FontAwesomeIcon icon={faShieldHalved} className="text-base" />
                       <span className="text-[11px] mt-1">Caregiver</span>
                     </button>
-                    <button onClick={() => setActiveTab('history')} className={`flex flex-col items-center transition-all ${activeTab === 'history' ? 'text-[#1E3A8A] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
+                    <button onClick={() => setActiveTab('history')} className={`flex flex-col items-center transition-all ${activeTab === 'history' ? 'text-[#003087] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
                       <FontAwesomeIcon icon={faTableCells} className="text-base" />
                       <span className="text-[11px] mt-1">History Matrix</span>
                     </button>
@@ -553,7 +553,7 @@ export default function Home() {
                           ? 'bg-[#2563EB] text-white ring-4 ring-[#00CAFF]/60 shadow-[0_0_20px_rgba(0,202,255,0.6)] animate-pulse'
                           : alexaAgent.isSpeaking
                           ? 'bg-[#00CAFF] text-slate-900 ring-4 ring-[#00CAFF]/50 shadow-[0_0_20px_rgba(0,202,255,0.6)]'
-                          : 'bg-[#1E3A8A] hover:bg-[#1E40AF] text-white'
+                          : 'bg-gradient-to-r from-[#003087] to-[#0070BA] hover:from-[#002266] hover:to-[#005a96] text-white'
                       }`}
                       title={alexaAgent.isListening ? 'Click to stop listening' : 'Speak with Alexa Ambient assistant'}
                     >
@@ -574,7 +574,7 @@ export default function Home() {
                   </div>
 
                   <div className="flex items-center gap-5 pr-1">
-                    <button onClick={() => setActiveTab('analytics')} className={`flex flex-col items-center transition-all ${activeTab === 'analytics' ? 'text-[#1E3A8A] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
+                    <button onClick={() => setActiveTab('analytics')} className={`flex flex-col items-center transition-all ${activeTab === 'analytics' ? 'text-[#003087] font-bold' : 'text-slate-400 hover:text-slate-600 font-medium'}`}>
                       <FontAwesomeIcon icon={faChartLine} className="text-base" />
                       <span className="text-[11px] mt-1">Analytics</span>
                     </button>
@@ -587,7 +587,7 @@ export default function Home() {
               </div>
 
               {/* 4. ECHO SHOW 10 ALEXA CYAN AMBIENT GLOW */}
-              <AlexaAmbientGlow
+              <AmbientVoiceGlow
                 isListening={alexaAgent.isListening}
                 isThinking={alexaAgent.isThinking}
                 isSpeaking={alexaAgent.isSpeaking}

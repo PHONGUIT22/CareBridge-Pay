@@ -187,7 +187,7 @@ export function DeskModeView({
           }`}
         >
           <span className={`w-2 h-2 rounded-full animate-pulse ${isNightDimmer ? 'bg-amber-400' : 'bg-teal-400'}`} />
-          <span>SENIOR NIGHTSTAND • {effectivePatientName ? effectivePatientName.toUpperCase() : 'PATIENT'}</span>
+          <span>CAREBRIDGE PAY • {effectivePatientName ? effectivePatientName.toUpperCase() : 'PATIENT'}</span>
         </div>
 
         <div className="flex items-center gap-2">

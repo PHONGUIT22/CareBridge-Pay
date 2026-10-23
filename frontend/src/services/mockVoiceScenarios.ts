@@ -10,58 +10,68 @@ export interface MockVoiceScenario {
 }
 
 /**
- * Pre-built, clinically realistic demonstration scenarios matching DEMO_SCRIPT_3MIN.md
- * for zero-speech, dual-turn multimodal video recording.
+ * Pre-built, clinically realistic demonstration scenarios matching CareBridge Pay
+ * for PayPal AI Hackathon presentation and zero-speech simulated testing.
  */
 export const MOCK_VOICE_SCENARIOS: MockVoiceScenario[] = [
   {
     id: 'schedule',
     title: 'Daily Schedule',
     badge: 'getTodaySchedule',
-    prompt: "Alexa, what's my medicine schedule today?",
+    prompt: "What's my medicine schedule today?",
     description: "Queries upcoming daily doses, adherence percentage, and active prescriptions.",
     targetTool: 'getTodaySchedule',
     actionIcon: '📅',
-    accentColor: '#1E3A8A', // Royal Navy
+    accentColor: '#003087', // PayPal Deep Blue
   },
   {
     id: 'dose_confirm',
-    title: 'Dose Confirmation',
+    title: 'Dose Confirmation & Low Stock Alert',
     badge: 'logDoseStatus',
-    prompt: 'Alexa, I just took my morning Amlodipine pill with breakfast.',
-    description: 'Confirms morning intake, decrements stock, and triggers confetti compliance reward.',
+    prompt: 'I just took my morning Amlodipine pill with breakfast.',
+    description: 'Confirms intake, decrements stock. When stock <= 3, AI autonomously prompts senior for PayPal refill.',
     targetTool: 'logDoseStatus',
     actionIcon: '💊',
     accentColor: '#10B981', // Emerald
   },
   {
     id: 'pharmacy_refill',
-    title: 'Amazon Pharmacy Refill',
+    title: 'PayPal Agentic Refill (1-Click Vault)',
     badge: 'orderRefill',
-    prompt: 'Alexa, I only have 3 Lipitor pills left. Please order a refill.',
-    description: 'Autonomous 1-click refill via Amazon Pharmacy with Order ID and Prime 2-Day delivery.',
+    prompt: 'Refill my blood pressure pills with PayPal.',
+    description: 'Autonomous 1-click refill settled via PayPal Developer Platform (Orders v2 / Vault Token) within Family Wallet limit.',
     targetTool: 'orderRefill',
-    actionIcon: '📦',
-    accentColor: '#0284C7', // Amazon Blue
+    actionIcon: '💳',
+    accentColor: '#0070BA', // PayPal Ambient Blue
   },
   {
-    id: 'ring_porch',
-    title: 'Ring Porch Surveillance',
-    badge: 'ringDeviceHub',
-    prompt: 'Alexa, check my front porch Ring camera for package delivery.',
-    description: 'Opens Ring live night-vision feed with green CV package tracking bounding box.',
-    targetTool: 'ringDeviceHub',
-    actionIcon: '📹',
-    accentColor: '#0D9488', // Teal
+    id: 'invoice_refill',
+    title: 'Exceeding Limit -> Caregiver PayPal Invoice',
+    badge: 'orderRefill',
+    prompt: 'Order 90 days of Metformin with express shipping.',
+    description: 'Exceeds Eleanor’s $50 monthly limit: AI dispatches PayPal Invoice link + AWS SNS SMS to caregiver Sarah Connor.',
+    targetTool: 'orderRefill',
+    actionIcon: '📩',
+    accentColor: '#D97706', // Amber Gold
   },
   {
     id: 'emergency_alert',
-    title: 'Emergency Triage & Paramedic',
+    title: 'Emergency Triage & Paramedic Access',
     badge: 'clinicalAdvisor',
-    prompt: 'Alexa, I have severe crushing chest pain and shortness of breath!',
-    description: 'Triggers acute triage, dispatches AWS SNS alert to Sarah, and unlocks door for paramedics.',
+    prompt: 'I have severe crushing chest pain and dizziness!',
+    description: 'Triggers acute triage, dispatches AWS SNS alert to Sarah, and unlocks smart door for paramedics.',
     targetTool: 'clinicalAdvisor',
     actionIcon: '🚨',
     accentColor: '#DC2626', // Crimson Red
+  },
+  {
+    id: 'ring_porch',
+    title: 'Smart Porch Prescription Verification',
+    badge: 'ringDeviceHub',
+    prompt: 'Check my front porch camera for my PayPal prescription package delivery.',
+    description: 'Opens live porch camera feed verifying pharmacy parcel arrival on door mat.',
+    targetTool: 'ringDeviceHub',
+    actionIcon: '📹',
+    accentColor: '#0D9488', // Teal
   },
 ];

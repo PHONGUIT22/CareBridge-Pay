@@ -44,39 +44,35 @@ export interface AlexaAgentConsoleProps {
 const QUICK_PROMPTS = [
   {
     label: "What's my schedule?",
-    prompt: "Alexa, what's my medicine schedule today?",
+    prompt: "What's my medicine schedule today?",
   },
   {
-    label: 'Took Atorvastatin (Low Stock)',
-    prompt: 'Alexa, I just took my Atorvastatin pill.',
+    label: 'Refill with PayPal (1-Click)',
+    prompt: 'Refill my blood pressure pills with PayPal.',
   },
   {
-    label: 'Yes, Order Refill (Amazon)',
-    prompt: 'Alexa, yes, order my Atorvastatin refill via Amazon Pharmacy.',
+    label: 'Order Metformin (Exceeds Limit -> Invoice)',
+    prompt: 'Order 90 days of Metformin with express shipping.',
   },
   {
-    label: 'Took Amlodipine',
-    prompt: 'Alexa, I just took my morning Amlodipine pill.',
+    label: 'Took Amlodipine (Low Stock Alert)',
+    prompt: 'I just took my morning Amlodipine pill.',
   },
   {
     label: 'Refuse Dose (Guardian)',
-    prompt: "Alexa, I don't want to take my pills today.",
+    prompt: "I don't want to take my pills today.",
   },
   {
     label: 'Mild dizziness',
-    prompt: 'Alexa, I feel mild dizziness after taking my pill.',
+    prompt: 'I feel mild dizziness after taking my pill.',
   },
   {
-    label: 'Chest discomfort',
-    prompt: 'Alexa, I have severe crushing chest pain and shortness of breath.',
+    label: 'Chest discomfort (Emergency)',
+    prompt: 'I have severe crushing chest pain and shortness of breath.',
   },
   {
-    label: 'Check Porch (Ring)',
-    prompt: 'Alexa, check my front porch Ring camera for packages.',
-  },
-  {
-    label: 'Unlock Door (Ring)',
-    prompt: 'Alexa, unlock front door for paramedics.',
+    label: 'Check Porch (Ring Cam)',
+    prompt: 'Check my front porch camera for packages.',
   },
 ];
 
@@ -181,11 +177,11 @@ export function AlexaAgentConsole({
             </div>
             <div>
               <h2 className="text-xs font-bold text-slate-900 flex items-center gap-1.5 leading-none tracking-tight">
-                <span>Alexa Ambient Agent</span>
+                <span>CareBridge Pay Agent</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#00CAFF] animate-pulse" />
               </h2>
               <p className="text-[11px] text-slate-500 font-medium mt-0.5">
-                Bedside Echo Show 10 • Patient: <strong className="text-slate-700">{patientName || 'Eleanor Vance'} ({patientAge || 78})</strong>
+                Smart Ambient Display • PayPal AI • Patient: <strong className="text-slate-700">{patientName || 'Eleanor Vance'} ({patientAge || 78})</strong>
               </p>
             </div>
           </div>

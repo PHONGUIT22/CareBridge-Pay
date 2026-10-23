@@ -4,7 +4,11 @@ import {
   MedicinesResponse,
   DoseActionResponse,
   ClinicalAdviceResponse,
+  PayPalRefillOrder,
   AmazonRefillOrder,
+  PayPalTransaction,
+  WalletStatus,
+  SubscriptionResponse,
   VitalsRecord,
   LogStatus,
   AgentTurnResponse,
@@ -255,7 +259,7 @@ export const mcpClient = {
 
   /**
    * POST /api/dose
-   * Log dose status via Alexa voice command or direct UI selection
+   * Log dose status via voice command or direct UI selection
    */
   async logDoseStatus(args: {
     logId?: string;
@@ -373,21 +377,119 @@ export const mcpClient = {
   },
 
   /**
-   * POST /api/refill (Amazon Pharmacy 1-Click Refill MCP Tool)
+   * POST /api/refill (PayPal 1-Click Vault / Family Wallet Refill MCP Tool)
    */
   async orderRefill(params: {
     medicineName: string;
+    medicineId?: string;
     quantity?: number;
-  }): Promise<AmazonRefillOrder> {
+  }): Promise<PayPalRefillOrder> {
     const res = await fetchWithTimeout(`${API_BASE_URL}/api/refill`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(params),
     });
     if (!res.ok) {
-      throw new Error(`Failed to place Amazon Pharmacy refill: ${res.statusText}`);
+      throw new Error(`Failed to place PayPal prescription refill: ${res.statusText}`);
     }
     return res.json();
+  },
+
+  /**
+   * GET /api/transactions
+   * Retrieve Medical-Financial Ledger for Caregiver & Doctor AG Grid Analytics
+   */
+  async getTransactions(limit: number = 50): Promise<{
+    success: boolean;
+    transactions: PayPalTransaction[];
+    wallet: WalletStatus;
+    count: number;
+  }> {
+    const res = await fetchWithTimeout(`${API_BASE_URL}/api/transactions?limit=${limit}`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch transactions: ${res.statusText}`);
+    }
+    return res.json();
+  },
+
+  /**
+   * GET /api/wallet
+   * Retrieve senior's Family Wallet limits and balance
+   */
+  async getWallet(): Promise<{ success: boolean; wallet: WalletStatus }> {
+    const res = await fetchWithTimeout(`${API_BASE_URL}/api/wallet`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to fetch wallet: ${res.statusText}`);
+    }
+    return res.json();
+  },
+
+  /**
+   * POST /api/wallet/limit
+   * Adjust Caregiver Family Wallet monthly spending limit
+   */
+  async updateWalletLimit(limit: number): Promise<{ success: boolean; message: string; wallet: WalletStatus }> {
+    const res = await fetchWithTimeout(`${API_BASE_URL}/api/wallet/limit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ limit }),
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to update wallet limit: ${res.statusText}`);
+    }
+    return res.json();
+  },
+
+  /**
+   * POST /api/subscription/create
+   * Create Caregiver Copilot subscription ($9.99/mo) via PayPal Subscriptions API
+   */
+  async createSubscription(params?: {
+    subscriberEmail?: string;
+    subscriberName?: string;
+  }): Promise<SubscriptionResponse> {
+    const res = await fetchWithTimeout(`${API_BASE_URL}/api/subscription/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params || {}),
+    });
+    if (!res.ok) {
+      throw new Error(`Failed to create PayPal subscription: ${res.statusText}`);
+    }
+    return res.json();
+  },
+
+  /**
+   * Subscribe to backend Server-Sent Events (SSE)
+   * Real-time push for PayPal webhooks, transactions, and refills
+   */
+  subscribeToEvents(onEvent: (event: { type: string; data: any }) => void): () => void {
+    if (typeof window === 'undefined') {
+      return () => {};
+    }
+    try {
+      const eventSource = new EventSource(`${API_BASE_URL}/api/events`);
+      eventSource.onmessage = (e) => {
+        try {
+          const parsed = JSON.parse(e.data);
+          onEvent(parsed);
+        } catch (err) {
+          // ignore keepalive comments
+        }
+      };
+      eventSource.onerror = () => {
+        // SSE will automatically attempt reconnection
+      };
+      return () => {
+        eventSource.close();
+      };
+    } catch (e) {
+      return () => {};
+    }
   },
 
   /**
