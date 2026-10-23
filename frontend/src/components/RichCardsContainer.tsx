@@ -3,11 +3,12 @@
 import React from 'react';
 import { PillVisualCard } from './RichCards/PillVisualCard';
 import { ClinicalAdviceCard } from './RichCards/ClinicalAdviceCard';
-import { AmazonOrderCard } from './RichCards/AmazonOrderCard';
+import { PayPalReceiptCard } from './RichCards/PayPalReceiptCard';
 import { RingDoorbellCard } from './RichCards/RingDoorbellCard';
 import { GuardianNegotiationCard } from './RichCards/GuardianNegotiationCard';
 import { DoctorReportPreviewModal } from './DoctorReportPreviewModal';
 import {
+  PayPalRefillOrder,
   AmazonRefillOrder,
   ClinicalAdviceResponse,
   GuardianNegotiationCardData,
@@ -27,10 +28,13 @@ export interface RichCardsContainerProps {
   onCloseClinicalAdvice: () => void;
   clinicalAdviceData: ClinicalAdviceResponse | null;
 
-  // Amazon Pharmacy Refill Card
-  amazonOrderCardOpen: boolean;
-  onCloseAmazonOrderCard: () => void;
-  amazonOrderData: AmazonRefillOrder | null;
+  // PayPal Prescription Refill Card (with Amazon alias for backwards compat)
+  amazonOrderCardOpen?: boolean;
+  onCloseAmazonOrderCard?: () => void;
+  amazonOrderData?: AmazonRefillOrder | null;
+  payPalOrderCardOpen?: boolean;
+  onClosePayPalOrderCard?: () => void;
+  payPalOrderData?: PayPalRefillOrder | null;
   onTrackOrder: (orderId: string) => void;
   onViewPorchCamera?: () => void;
 
@@ -66,7 +70,7 @@ export interface RichCardsContainerProps {
 }
 
 /**
- * RichCardsContainer - Unified modal container for all Alexa+ rich visual cards
+ * RichCardsContainer - Unified modal container for all CareBridge Pay rich visual cards
  */
 export function RichCardsContainer({
   visualCardOpen,
@@ -77,9 +81,12 @@ export function RichCardsContainer({
   onCloseClinicalAdvice,
   clinicalAdviceData,
 
-  amazonOrderCardOpen,
-  onCloseAmazonOrderCard,
-  amazonOrderData,
+  amazonOrderCardOpen = false,
+  onCloseAmazonOrderCard = () => {},
+  amazonOrderData = null,
+  payPalOrderCardOpen = false,
+  onClosePayPalOrderCard,
+  payPalOrderData,
   onTrackOrder,
   onViewPorchCamera,
 
@@ -109,6 +116,11 @@ export function RichCardsContainer({
   caregiverName = 'Sarah Connor',
   isPro = false,
 }: RichCardsContainerProps) {
+  // Support both new payPal props and legacy amazon props
+  const isOrderCardOpen = payPalOrderCardOpen || amazonOrderCardOpen;
+  const handleCloseOrderCard = onClosePayPalOrderCard || onCloseAmazonOrderCard;
+  const effectiveOrderData = payPalOrderData || amazonOrderData;
+
   return (
     <>
       {/* 1. Zoomed-in Pill Identification Card */}
@@ -152,11 +164,11 @@ export function RichCardsContainer({
         }
       />
 
-      {/* 3. Amazon Pharmacy 1-Click Refill Order Card */}
-      <AmazonOrderCard
-        isOpen={amazonOrderCardOpen}
-        onClose={onCloseAmazonOrderCard}
-        order={amazonOrderData}
+      {/* 3. PayPal Developer Platform (Orders v2 / Vault / Invoicing) Refill Receipt Card */}
+      <PayPalReceiptCard
+        isOpen={isOrderCardOpen}
+        onClose={handleCloseOrderCard}
+        order={effectiveOrderData}
         onTrackOrder={onTrackOrder}
         onViewPorchCamera={onViewPorchCamera}
       />
