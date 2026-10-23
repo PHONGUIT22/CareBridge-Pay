@@ -16,9 +16,9 @@
     "test:bedrock": "npm run test:bedrock --workspace=backend-mcp"
   },
   "devDependencies": {
-    "concurrently": "^9.1.0"
+    "concurrently": "^9.2.5"
   },
-  "description": "Ambient Agentic Healthcare & Autonomous Family Commerce with PayPal & AG Grid",
+  "description": "",
   "main": "index.js",
   "keywords": [],
   "author": "",
