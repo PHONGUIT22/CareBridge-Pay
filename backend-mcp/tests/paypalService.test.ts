@@ -67,11 +67,12 @@ describe('PayPal Developer Platform Service Suite (AI Hackathon 2026)', () => {
         currency: 'USD',
       });
 
-      const capture = await capturePayPalOrder(order.orderId);
+      const capture = await capturePayPalOrder(order.orderId, '9.80');
       expect(capture.success).toBe(true);
       expect(capture.orderId).toBe(order.orderId);
       expect(capture.captureId).toBeDefined();
       expect(capture.status).toBe('COMPLETED');
+      expect(capture.amount.value).toBe('9.80');
       expect(capture.captureTime).toBeDefined();
     });
   });
@@ -123,6 +124,7 @@ describe('PayPal Developer Platform Service Suite (AI Hackathon 2026)', () => {
       expect(charge.success).toBe(true);
       expect(charge.captureId).toBeDefined();
       expect(charge.status).toBe('COMPLETED');
+      expect(charge.amount.value).toBe('8.40');
     });
   });
 

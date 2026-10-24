@@ -12,6 +12,7 @@ export interface CreateOrderParams {
   returnUrl?: string;
   cancelUrl?: string;
   referenceId?: string;
+  vaultTokenId?: string;
 }
 
 export interface PayPalOrderResult {
@@ -267,6 +268,15 @@ export async function createPayPalOrder(params: CreateOrderParams): Promise<PayP
     },
   };
 
+  if (params.vaultTokenId) {
+    (payload as any).payment_source = {
+      token: {
+        id: params.vaultTokenId,
+        type: 'BILLING_AGREEMENT',
+      },
+    };
+  }
+
   try {
     const response = await fetch(`${envConfig.PAYPAL_BASE_URL}/v2/checkout/orders`, {
       method: 'POST',
@@ -343,7 +353,8 @@ function simulateOrderCreation(
  * 2. Capture PayPal Order (Orders API v2)
  * Calls POST /v2/checkout/orders/{id}/capture
  */
-export async function capturePayPalOrder(orderId: string): Promise<CaptureOrderResult> {
+export async function capturePayPalOrder(orderId: string, expectedPrice?: string | number): Promise<CaptureOrderResult> {
+  const fallbackValue = expectedPrice !== undefined ? normalizePrice(expectedPrice) : '12.50';
   const token = await getPayPalAccessToken();
 
   // If order is simulated or token is simulated
@@ -361,7 +372,7 @@ export async function capturePayPalOrder(orderId: string): Promise<CaptureOrderR
       status: 'COMPLETED',
       amount: {
         currencyCode: 'USD',
-        value: '12.50',
+        value: fallbackValue,
       },
       payerEmail: 'family.wallet@carebridge.ai',
       payerName: 'Caregiver Family Wallet',
@@ -390,7 +401,7 @@ export async function capturePayPalOrder(orderId: string): Promise<CaptureOrderR
         orderId,
         captureId: mockCaptureId,
         status: 'COMPLETED',
-        amount: { currencyCode: 'USD', value: '12.50' },
+        amount: { currencyCode: 'USD', value: fallbackValue },
         simulated: true,
         captureTime: new Date().toISOString(),
       };
@@ -407,7 +418,7 @@ export async function capturePayPalOrder(orderId: string): Promise<CaptureOrderR
       status: (captureObj?.status || data.status || 'COMPLETED') as any,
       amount: {
         currencyCode: captureObj?.amount?.currency_code || 'USD',
-        value: captureObj?.amount?.value || '12.50',
+        value: captureObj?.amount?.value || fallbackValue,
       },
       payerEmail: payer?.email_address,
       payerName: payer?.name?.given_name ? `${payer.name.given_name} ${payer.name.surname || ''}`.trim() : undefined,
@@ -422,7 +433,7 @@ export async function capturePayPalOrder(orderId: string): Promise<CaptureOrderR
       orderId,
       captureId: `CAP-OFFLINE-${randomUUID().substring(0, 8).toUpperCase()}`,
       status: 'COMPLETED',
-      amount: { currencyCode: 'USD', value: '12.50' },
+      amount: { currencyCode: 'USD', value: fallbackValue },
       simulated: true,
       captureTime: new Date().toISOString(),
     };
@@ -680,9 +691,10 @@ export async function chargeVaultedToken(params: VaultChargeParams): Promise<Cap
     userId: params.userId,
     caregiverEmail: params.caregiverEmail,
     referenceId: `vault_${params.vaultTokenId}`,
+    vaultTokenId: params.vaultTokenId,
   });
 
-  return capturePayPalOrder(order.orderId);
+  return capturePayPalOrder(order.orderId, priceStr);
 }
 
 /**

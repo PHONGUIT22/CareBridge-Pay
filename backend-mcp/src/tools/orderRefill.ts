@@ -220,7 +220,7 @@ export const orderRefillTool = {
       caregiverEmail: wallet.caregiverEmail,
     });
 
-    const captureResult = await paypalService.captureOrder(orderResult.orderId);
+    const captureResult = await paypalService.captureOrder(orderResult.orderId, totalNumeric);
 
     // Update medication stock count in SQLite
     const newStock = previousStock + quantity;
