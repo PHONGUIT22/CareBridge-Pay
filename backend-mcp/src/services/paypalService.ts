@@ -499,7 +499,6 @@ export async function createPayPalInvoice(params: CreateInvoiceParams): Promise<
         given_name: 'CareBridge',
         surname: 'Pay Health',
       },
-      email_address: 'billing@carebridge.ai',
     },
     primary_recipients: [
       {
@@ -544,7 +543,9 @@ export async function createPayPalInvoice(params: CreateInvoiceParams): Promise<
     const invoiceId = createdData.id || createdData.href?.split('/').pop();
 
     // Send invoice so caregiver receives email notification with pay link
-    let invoiceUrl = `https://www.sandbox.paypal.com/invoice/p/#${invoiceId}`;
+    let invoiceUrl = invoiceId
+      ? `https://www.sandbox.paypal.com/invoice/p/#${invoiceId.replace(/^INV2-/, '')}`
+      : 'https://www.sandbox.paypal.com/invoice';
     if (invoiceId) {
       try {
         const sendRes = await fetch(`${envConfig.PAYPAL_BASE_URL}/v2/invoicing/invoices/${invoiceId}/send`, {
@@ -555,10 +556,29 @@ export async function createPayPalInvoice(params: CreateInvoiceParams): Promise<
           },
           body: JSON.stringify({
             send_to_invoicer: false,
+            send_to_recipient: true,
           }),
         });
         if (sendRes.ok) {
           console.info(`[PayPal Service] Invoice ${invoiceId} dispatched to ${caregiverEmail}`);
+        }
+
+        try {
+          const getRes = await fetch(`${envConfig.PAYPAL_BASE_URL}/v2/invoicing/invoices/${invoiceId}`, {
+            method: 'GET',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          });
+          if (getRes.ok) {
+            const invoiceDetails = (await getRes.json()) as any;
+            if (invoiceDetails.detail?.metadata?.recipient_view_url) {
+              invoiceUrl = invoiceDetails.detail.metadata.recipient_view_url;
+            }
+          }
+        } catch (getErr) {
+          console.warn('[PayPal Service] Get invoice details error:', getErr);
         }
       } catch (sendErr) {
         console.warn('[PayPal Service] Send invoice notification error:', sendErr);
