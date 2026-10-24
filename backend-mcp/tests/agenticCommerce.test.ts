@@ -76,9 +76,47 @@ describe('Phase 2: PayPal Agentic Commerce & Autonomous Healthcare Settlement', 
       expect(txn?.status).toBe('INVOICE_SENT');
       expect(txn?.type).toBe('invoice');
     });
+
+    it('triggers INVOICE_SENT when cumulative monthly spending exceeds family wallet limit', async () => {
+      await seedDemoData('usr_demo', true);
+      const allMeds = await MedicineRepo.getAllMedicines('usr_demo');
+      const med = allMeds[0];
+
+      // First refill: 30 tablets ($9.80) -> within $50 limit
+      const res1 = await orderRefillTool.handler({
+        medicineName: med.name,
+        quantity: 30,
+        userId: 'usr_demo',
+      });
+      expect(res1.paymentStatus).toBe('COMPLETED');
+
+      // Update wallet spent to $45.00 so next refill pushes it over $50
+      const db = getDatabase();
+      db.prepare('UPDATE users SET monthly_wallet_spent = 45.00 WHERE id = ?').run('usr_demo');
+
+      // Second refill: $9.80 -> cumulative spent = $45 + $9.80 = $54.80 > $50.00 limit
+      const res2 = await orderRefillTool.handler({
+        medicineName: med.name,
+        quantity: 30,
+        userId: 'usr_demo',
+      });
+
+      expect(res2.success).toBe(true);
+      expect(res2.paymentStatus).toBe('INVOICE_SENT');
+      expect(res2.richCard.type).toBe('PayPalInvoiceReceipt');
+      expect(res2.speechText).toContain('exceeds');
+      expect(res2.speechText).toContain('invoice');
+
+      // Reset wallet spent so subsequent test suites start with clean limits
+      db.prepare('UPDATE users SET monthly_wallet_spent = 0.00 WHERE id = ?').run('usr_demo');
+    });
   });
 
   describe('2. Voice Turn Orchestration with PayPal Intent Recognition', () => {
+    beforeAll(async () => {
+      await seedDemoData('usr_demo', true);
+    });
+
     it('recognizes "Refill my blood pressure pills with PayPal" and executes settlement', async () => {
       const res = await handleAgentTurn({
         query: 'Refill my blood pressure pills with PayPal',
@@ -112,6 +150,22 @@ describe('Phase 2: PayPal Agentic Commerce & Autonomous Healthcare Settlement', 
 
       expect(res.success).toBe(true);
       expect(res.toolName).toBe('orderRefill');
+    });
+
+    it('recognizes "Order 90 days of Metformin with express shipping." and triggers caregiver invoice escalation', async () => {
+      await seedDemoData('usr_demo', true);
+      const res = await handleAgentTurn({
+        query: 'Order 90 days of Metformin with express shipping.',
+        userId: 'usr_demo',
+      });
+
+      expect(res.success).toBe(true);
+      expect(res.toolName).toBe('orderRefill');
+      expect(res.toolArgs?.medicineName).toBe('Metformin');
+      expect(res.toolArgs?.quantity).toBe(180);
+      expect(res.toolResult.paymentStatus).toBe('INVOICE_SENT');
+      expect(res.toolResult.richCard.type).toBe('PayPalInvoiceReceipt');
+      expect(res.speechResponse).toContain('invoice');
     });
   });
 

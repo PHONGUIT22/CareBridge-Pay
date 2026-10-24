@@ -258,9 +258,10 @@ export interface SubscriptionResponse {
     subscriptionId: string;
     status: string;
     tierName: string;
-    pricePerMonth: number;
+    pricePerMonth: number | string;
     approvalUrl?: string;
-    startTime: string;
+    startTime?: string;
+    simulated?: boolean;
   };
   error?: string;
 }

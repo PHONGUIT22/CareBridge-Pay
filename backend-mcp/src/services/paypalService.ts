@@ -706,6 +706,57 @@ export async function createSubscription(params: SubscriptionParams): Promise<Su
   const tierName = params.tierName || 'Caregiver Copilot Pro';
   const pricePerMonth = (params.pricePerMonth || 9.99).toFixed(2);
 
+  const token = await getPayPalAccessToken();
+
+  if (token !== 'SIMULATED_PAYPAL_ACCESS_TOKEN' && envConfig.hasPayPalCredentials) {
+    try {
+      const response = await fetch(`${envConfig.PAYPAL_BASE_URL}/v1/billing/subscriptions`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'PayPal-Request-Id': randomUUID(),
+        },
+        body: JSON.stringify({
+          plan_id: planId,
+          subscriber: {
+            name: {
+              given_name: params.subscriberName || 'Sarah Connor',
+            },
+            email_address: params.subscriberEmail,
+          },
+          application_context: {
+            brand_name: 'CareBridge Pay',
+            user_action: 'SUBSCRIBE_NOW',
+            return_url: `${envConfig.NEXT_PUBLIC_MCP_URL}/api/paypal/return`,
+            cancel_url: `${envConfig.NEXT_PUBLIC_MCP_URL}/api/paypal/cancel`,
+          },
+        }),
+      });
+
+      if (response.ok) {
+        const data = (await response.json()) as any;
+        const approveLink = data.links?.find((l: any) => l.rel === 'approve')?.href;
+        return {
+          success: true,
+          subscriptionId: data.id,
+          planId,
+          status: data.status || 'ACTIVE',
+          tierName,
+          pricePerMonth: `$${pricePerMonth}/mo`,
+          approvalUrl: approveLink || `https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=${data.id}`,
+          simulated: false,
+        };
+      } else {
+        const errText = await response.text();
+        console.warn(`[PayPal Service] createSubscription HTTP ${response.status}:`, errText);
+      }
+    } catch (err: unknown) {
+      console.warn('[PayPal Service] Exception during createSubscription:', (err as Error).message);
+    }
+  }
+
+  // Graceful fallback to simulated subscription
   const mockSubId = `I-SUB-${Math.random().toString(36).substring(2, 9).toUpperCase()}`;
   const approvalUrl = `https://www.sandbox.paypal.com/webapps/billing/subscriptions?ba_token=${mockSubId}`;
 

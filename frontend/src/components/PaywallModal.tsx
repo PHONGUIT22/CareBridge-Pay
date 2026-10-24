@@ -93,6 +93,9 @@ export function PaywallModal({
   };
 
   const clientId = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || 'test';
+  const hasRealPayPalClientId = Boolean(
+    clientId && clientId !== 'test' && clientId !== 'your_paypal_client_id_here' && !clientId.includes('your_')
+  );
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/65 backdrop-blur-md animate-fadeIn">
@@ -200,7 +203,7 @@ export function PaywallModal({
 
         {/* PAYPAL SMART PAYMENT BUTTONS / SUBSCRIPTION BUTTONS */}
         <div className="mb-3">
-          {!sdkError ? (
+          {hasRealPayPalClientId && !sdkError ? (
             <PayPalScriptProvider
               options={{
                 clientId: clientId === 'your_paypal_client_id_here' ? 'test' : clientId,
@@ -223,8 +226,13 @@ export function PaywallModal({
                       subscriberName: 'Sarah Connor',
                     });
                     if (res.success && res.subscription) {
+                      if (res.subscription.simulated) {
+                        handleSubscriptionSuccess(res.subscription.subscriptionId);
+                        return res.subscription.subscriptionId;
+                      }
                       return res.subscription.subscriptionId;
                     }
+                    handleSubscriptionSuccess('I-BW452GLR-DEMO');
                     return 'I-BW452GLR-DEMO';
                   }}
                   onApprove={async (data) => {
@@ -260,7 +268,7 @@ export function PaywallModal({
           )}
 
           {/* Backup direct button in case script takes time to render */}
-          {!sdkError && (
+          {hasRealPayPalClientId && !sdkError && (
             <button
               type="button"
               onClick={handleDirectPayPalSubscribe}
