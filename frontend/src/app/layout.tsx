@@ -17,7 +17,7 @@ const geist = Geist({
 export const metadata: Metadata = {
   title: 'CareBridge Ambient - Echo Show Simulator',
   description:
-    'Senior Medication Adherence & Care Companion powered by Alexa+ MCP and AWS Bedrock',
+    'Senior Medication Adherence & Autonomous Healthcare Commerce with PayPal & Ambient AI',
 };
 
 export default function RootLayout({

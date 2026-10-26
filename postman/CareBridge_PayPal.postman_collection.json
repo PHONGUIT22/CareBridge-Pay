@@ -1,0 +1,77 @@
+{
+  "info": {
+    "name": "CareBridge Pay - PayPal Developer Platform & MCP Collection",
+    "_postman_id": "carebridge-paypal-mcp-v1",
+    "description": "Postman Collection for CareBridge Pay: Agentic Commerce, PayPal Orders v2, Vault, Invoicing v2, Subscriptions, and MCP Orchestration.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1. PayPal Orders v2 - Autonomous Refill",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"medicineName\": \"Amlodipine Besylate\",\n  \"quantity\": 30,\n  \"price\": \"9.80\",\n  \"userId\": \"usr_demo\"\n}"
+        },
+        "url": { "raw": "http://localhost:3001/api/paypal/orders/create", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "paypal", "orders", "create"] }
+      }
+    },
+    {
+      "name": "2. PayPal Vault - Charge Token",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"vaultTokenId\": \"VAULT_DEMO_PREAPPROVED_TOKEN_01\",\n  \"amount\": \"9.80\",\n  \"currency\": \"USD\",\n  \"medicineName\": \"Amlodipine Besylate\"\n}"
+        },
+        "url": { "raw": "http://localhost:3001/api/paypal/vault/charge", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "paypal", "vault", "charge"] }
+      }
+    },
+    {
+      "name": "3. PayPal Invoicing v2 - Exceeding Limit Invoice",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"caregiverEmail\": \"sarah.connor@carebridge.health\",\n  \"caregiverName\": \"Sarah Connor\",\n  \"medicineName\": \"Metformin HCl 500mg\",\n  \"quantity\": 180,\n  \"price\": \"50.40\",\n  \"exceedsLimitReason\": \"Order total ($50.40) exceeds monthly Family Wallet threshold ($50.00)\"\n}"
+        },
+        "url": { "raw": "http://localhost:3001/api/paypal/invoices/create", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "paypal", "invoices", "create"] }
+      }
+    },
+    {
+      "name": "4. PayPal Subscriptions API - Create Copilot Pro Plan",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"planId\": \"P-CAREBRIDGE-COPILOT-PRO\",\n  \"subscriberEmail\": \"sarah.connor@carebridge.health\"\n}"
+        },
+        "url": { "raw": "http://localhost:3001/api/paypal/subscription/create", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "paypal", "subscription", "create"] }
+      }
+    },
+    {
+      "name": "5. MCP Agent Turn - Natural Voice Turn",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"query\": \"Refill my blood pressure pills with PayPal.\",\n  \"userId\": \"usr_demo\"\n}"
+        },
+        "url": { "raw": "http://localhost:3001/api/agent/turn", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "agent", "turn"] }
+      }
+    },
+    {
+      "name": "6. AG Grid Telemetry - Medical Financial Ledger Data",
+      "request": {
+        "method": "GET",
+        "url": { "raw": "http://localhost:3001/api/ledger?userId=usr_demo", "protocol": "http", "host": ["localhost"], "port": "3001", "path": ["api", "ledger"], "query": [{ "key": "userId", "value": "usr_demo" }] }
+      }
+    }
+  ]
+}

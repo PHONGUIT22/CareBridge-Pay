@@ -333,7 +333,7 @@ export function AlexaAgentConsole({
                 <div className="w-5 h-5 rounded-md bg-blue-50 text-[#1E3A8A] border border-blue-200 flex items-center justify-center text-xs">
                   <FontAwesomeIcon icon={faShieldHalved} />
                 </div>
-                <span className="text-xs font-bold text-slate-900 tracking-tight">Alexa Copilot</span>
+                <span className="text-xs font-bold text-slate-900 tracking-tight">CareBridge Copilot</span>
                 {msg.urgencyLevel && (
                   <span
                     className={`px-2 py-0.5 rounded-full text-xs font-mono font-medium border ${urgencyBadgeStyle(
@@ -469,7 +469,7 @@ export function AlexaAgentConsole({
             type="text"
             value={inputQuery}
             onChange={(e) => setInputQuery(e.target.value)}
-            placeholder="Ask Alexa or report symptoms..."
+            placeholder="Ask CareBridge or report symptoms..."
             className="w-full bg-slate-50 border border-slate-200/80 focus:bg-white focus:border-[#2563EB] rounded-xl pl-3.5 pr-20 py-2.5 text-xs text-slate-900 placeholder-slate-400 outline-none transition-all shadow-inner"
           />
 
@@ -484,7 +484,7 @@ export function AlexaAgentConsole({
                   ? 'bg-[#1E3A8A] text-white ring-2 ring-[#2563EB]/70 shadow-[0_0_10px_rgba(37,99,235,0.4)]'
                   : 'bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200'
               }`}
-              title={isListening ? 'Click to stop listening' : 'Speak with Alexa'}
+              title={isListening ? 'Click to stop listening' : 'Speak with CareBridge'}
             >
               <FontAwesomeIcon icon={faMicrophone} className="text-xs" />
             </button>

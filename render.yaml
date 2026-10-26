@@ -1,0 +1,36 @@
+services:
+  # 1. Backend MCP & PayPal Agent Service
+  - type: web
+    name: carebridge-pay-backend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build --workspace=backend-mcp
+    startCommand: npm run start --workspace=backend-mcp
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MCP_PORT
+        value: 3001
+      - key: PAYPAL_ENVIRONMENT
+        value: sandbox
+      - key: PAYPAL_CLIENT_ID
+        sync: false
+      - key: PAYPAL_CLIENT_SECRET
+        sync: false
+  # 2. Next.js 15 Ambient Frontend
+  - type: web
+    name: carebridge-pay-frontend
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm install && npm run build --workspace=frontend
+    startCommand: npm run start --workspace=frontend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        fromService:
+          type: web
+          name: carebridge-pay-backend
+          property: host

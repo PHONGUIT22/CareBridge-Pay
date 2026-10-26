@@ -555,7 +555,7 @@ export default function Home() {
                           ? 'bg-[#00CAFF] text-slate-900 ring-4 ring-[#00CAFF]/50 shadow-[0_0_20px_rgba(0,202,255,0.6)]'
                           : 'bg-gradient-to-r from-[#003087] to-[#0070BA] hover:from-[#002266] hover:to-[#005a96] text-white'
                       }`}
-                      title={alexaAgent.isListening ? 'Click to stop listening' : 'Speak with Alexa Ambient assistant'}
+                      title={alexaAgent.isListening ? 'Click to stop listening' : 'Speak with CareBridge Ambient assistant'}
                     >
                       <FontAwesomeIcon icon={alexaAgent.isThinking ? faCircleNotch : faMicrophone} className={`text-lg ${alexaAgent.isSpeaking ? 'text-slate-900' : 'text-white'} ${alexaAgent.isThinking ? 'animate-spin' : ''}`} />
                     </button>
@@ -612,7 +612,7 @@ export default function Home() {
               <div className="w-56 h-0.5 bg-gradient-to-r from-transparent via-[#00CAFF]/80 to-transparent shadow-[0_0_12px_#00CAFF]" />
               <div className="relative z-10 flex flex-col items-center mt-1">
                 <span className="text-[10px] font-mono tracking-widest text-slate-300 font-bold uppercase">
-                  Amazon Echo Show 10
+                  Ambient Smart Display Mode
                 </span>
                 <span className="text-[8.5px] font-mono tracking-tight text-sky-400">
                   Motorized Motion Swivel Base • Dual Tweeters & Woofer

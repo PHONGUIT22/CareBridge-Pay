@@ -10,7 +10,7 @@
 [![AG Grid $5,000 Bounty](https://img.shields.io/badge/AG%20Grid%20Bounty-%245%2C000%20Prize%20Aligned-42A5F5?style=for-the-badge&logo=ag-grid&logoColor=white)](#-ag-grid-medical-financial-ledger-5000-sponsor-bounty)
 [![AWS Bedrock & MCP](https://img.shields.io/badge/AI%20Agent-MCP%20Streamable%20HTTP%20%2B%20Bedrock%20Claude-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)](#-model-context-protocol-mcp--agentic-loop)
 [![License: MIT](https://img.shields.io/badge/License-MIT%20Open%20Source-10B981?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](./LICENSE)
-[![Vitest 95/95 Tests Passed](https://img.shields.io/badge/Vitest-95%20Passed%20(9%20Suites)-10B981?style=for-the-badge&logo=vitest&logoColor=white)](#-testing--verification)
+[![Vitest 98/98 Tests Passed](https://img.shields.io/badge/Vitest-98%20Passed%20(9%20Suites)-10B981?style=for-the-badge&logo=vitest&logoColor=white)](#-testing--verification)
 
 [📺 Watch Live Demo (YouTube)](https://youtu.be/placeholder) • [💻 Public GitHub Repository](https://github.com/PHONGUIT22/carebridge-pay) • [🏛️ System Architecture](./ARCHITECTURE.md) • [📐 Product Spec](./PRODUCT.md) • [🎬 3-Min Demo Script](./DEMO_SCRIPT_3MIN.md) • [📜 MIT License](./LICENSE)
 
@@ -18,7 +18,7 @@
 
 ---
 
-## 🌟 Executive Summary
+## 📋 Executive Summary
 
 **CareBridge Pay** pioneers **True Agentic Healthcare Commerce** by transforming ambient bedside and countertop smart displays into an autonomous, proactive medical commerce hub for independent seniors and remote family caregivers.
 
@@ -32,79 +32,52 @@ Powered by the **PayPal Developer Platform (Orders API v2, Vault Tokens, Invoici
 
 ---
 
-## 🏗️ System Architecture
+## 🏛️ System Architecture
 
-```
-                      ┌────────────────────────────────────────┐
-                      │    PATIENT VOICE / TOUCH CONFIRMATION  │
-                      │     "Alexa, I took my Amlodipine"      │
-                      └───────────────────┬────────────────────┘
-                                          │
-                                          ▼
-                      ┌────────────────────────────────────────┐
-                      │      AMBIENT SMART SCREEN CLIENT       │
-                      │    (Next.js 15 • Ambient Blue UI)      │
-                      └───────────────────┬────────────────────┘
-                                          │  SSE / REST (JSON-RPC)
-                                          ▼
-                      ┌────────────────────────────────────────┐
-                      │        BACKEND MCP AGENT SERVER        │
-                      │       (Model Context Protocol)         │
-                      └─────────────┬────────────────────┬─────┘
-                                    │                    │
-              Tool Invocation &     │                    │  Natural Voice Audio
-              Intent Classification │                    │  (AWS Polly Neural)
-                                    ▼                    ▼
-                      ┌──────────────────────┐  ┌──────────────────────┐
-                      │  AWS BEDROCK CLAUDE  │  │  CLINICAL BEERS REG  │
-                      │ (Claude Haiku Native │  │ (15-Drug Interaction │
-                      │      Tool-Use)       │  │    Safety Filter)    │
-                      └─────────────┬────────┘  └──────────────────────┘
-                                    │
-                         orderRefill Tool Call
-                                    │
-                                    ▼
-       ┌───────────────────────────────────────────────────────────────┐
-       │             PAYPAL DEVELOPER PLATFORM & APIS                  │
-       │                                                               │
-       │  ┌─────────────────────────┐     ┌─────────────────────────┐  │
-       │  │  PayPal Orders API v2   │     │   PayPal Vault Token    │  │
-       │  │ (createOrder/capture)   │     │ (Pre-approved 1-Click)  │  │
-       │  └───────────┬─────────────┘     └───────────┬─────────────┘  │
-       │              │                               │                │
-       │              └───────────────┬───────────────┘                │
-       │                              │                                │
-       │                Within Limit? │ Exceeds Limit?                 │
-       │            (<= $50.00 Limit) │ (> $50.00 Limit)               │
-       │                              ▼                                │
-       │              ┌───────────────────────────────┐                │
-       │              │   PayPal Invoicing API v2     │                │
-       │              │  (Caregiver SMS link via SNS) │                │
-       │              └───────────────┬───────────────┘                │
-       │                              │                                │
-       │  ┌─────────────────────────┐ │   ┌─────────────────────────┐  │
-       │  │   PayPal Webhook Engine │◄┴───│ PayPal Subscriptions API│  │
-       │  │  (Real-Time SSE Sync)   │     │ ($9.99/mo Caregiver Pro)│  │
-       │  └───────────┬─────────────┘     └─────────────────────────┘  │
-       └──────────────┼────────────────────────────────────────────────┘
-                      │
-                      ▼
-       ┌───────────────────────────────────────────────────────────────┐
-       │                 ATOMIC SQLITE WAL DATABASE                    │
-       │   - transactions (order_id, capture_id, amount, status)       │
-       │   - wallet_limits (monthly_limit, monthly_spent)              │
-       │   - medicine_catalog (stock_count, dosage, schedule)          │
-       │   - daily_intake_logs (adherence, timestamp)                  │
-       │   - biometric_vitals (systolic, diastolic, blood_sugar)       │
-       └──────────────────────────────┬────────────────────────────────┘
-                                      │
-                                      ▼
-       ┌───────────────────────────────────────────────────────────────┐
-       │        AG GRID MEDICAL-FINANCIAL LEDGER ($5K BOUNTY)          │
-       │  - Date/Time, Medication, Status (Taken/Missed)               │
-       │  - Vital Sign (BP/HR), PayPal Transaction ID, Refill Cost     │
-       │  - Payment Status Badge & One-Click CSV/Excel Export          │
-       └───────────────────────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph Patient["👵 Patient Ambient Voice"]
+        Voice["🗣️ Voice Intent: 'I took my Amlodipine' / 'Refill my pills'"]
+        Display["🖥️ Ambient Smart Display (Next.js 15)"]
+        Voice --> Display
+    end
+    subgraph MCP["🤖 Model Context Protocol (MCP) Server"]
+        Agent["Node.js 22 MCP Orchestrator (/api/agent/turn)"]
+        Tools["MCP Tools: logDoseStatus, orderRefill, recordVitals"]
+        Display -->|REST / SSE JSON-RPC| Agent
+        Agent --> Tools
+    end
+    subgraph AI["🧠 Clinical Intelligence Engine"]
+        Claude["AWS Bedrock Claude 3.5 Haiku (Tool-Use)"]
+        Safety["Clinical Beers Criteria & Drug Safety Filter"]
+        Tools <--> Claude
+        Tools <--> Safety
+    end
+    subgraph PayPal["💳 PayPal Developer Platform Ecosystem"]
+        direction TB
+        Decide{"Inventory <= 3 pills?<br/>Total <= $50 Wallet Limit?"}
+        Orders["PayPal Orders API v2 & Vault Token<br/>(Autonomous 1-Click Refill Settlement)"]
+        Invoice["PayPal Invoicing API v2<br/>(SMS Link to Sarah Connor on Limit Exceeded)"]
+        Subs["PayPal Subscriptions API<br/>($9.99/mo Copilot Pro Membership)"]
+        Webhooks["PayPal Webhook Engine<br/>(Real-Time SSE Bi-directional Sync)"]
+        
+        Tools --> Decide
+        Decide -->|Within $50 Limit| Orders
+        Decide -->|Exceeds $50 Limit| Invoice
+        Agent -.-> Subs
+        Orders -.-> Webhooks
+        Invoice -.-> Webhooks
+    end
+    subgraph Storage["💾 Persistence & Telemetry"]
+        DB[("Atomic SQLite WAL Database<br/>Transactions • Vitals • Inventory")]
+        Orders --> DB
+        Invoice --> DB
+        Webhooks --> DB
+    end
+    subgraph AGGrid["📊 Sponsor Bounty: AG Grid Community v36"]
+        Ledger["Medical-Financial Ledger<br/>• 7 Correlated Clinical-Financial Columns<br/>• Quick Search & Multi-Column Sorting<br/>• One-Click CSV/Excel Telemetry Export"]
+        DB --> Ledger
+    end
 ```
 
 ---
@@ -238,7 +211,7 @@ Run the automated test suite verifying PayPal services, MCP primitives, agentic 
 npm test --workspace=backend-mcp
 ```
 
-### Test Suite Output (95/95 Tests Passing):
+### Test Suite Output (98/98 Tests Passing):
 ```
  ✓ tests/agenticCommerce.test.ts (11 tests)
  ✓ tests/paypalService.test.ts (11 tests)
@@ -251,7 +224,7 @@ npm test --workspace=backend-mcp
  ✓ tests/resources.test.ts (12 tests)
 
  Test Files  9 passed (9)
-      Tests  95 passed (95)
+      Tests  98 passed (98)
    Duration  4.10s
 ```
 
