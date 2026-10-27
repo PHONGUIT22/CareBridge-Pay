@@ -55,7 +55,7 @@ export async function seedDemoData(
       dosage: '5mg - 1 Tablet',
       reminderTimes: ['08:00'],
       daysOfWeek: ['ALL'],
-      stockCount: 24,
+      stockCount: 4, // Set to 4 so taking 1 dose reduces stock to 3, triggering low-stock refill
       type: 'medication' as const,
     },
     {

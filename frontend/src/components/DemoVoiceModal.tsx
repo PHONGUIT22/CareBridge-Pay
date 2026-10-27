@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark, faBolt, faMicrophone, faPlay } from '@fortawesome/free-solid-svg-icons';
 import { MOCK_VOICE_SCENARIOS, MockVoiceScenario } from '../services/mockVoiceScenarios';
+import { mcpClient } from '../services/mcpClient';
 
 export interface DemoVoiceModalProps {
   isOpen: boolean;
@@ -11,6 +12,7 @@ export interface DemoVoiceModalProps {
   onSelectScenario: (scenario: MockVoiceScenario) => void;
   activeScenarioId?: string | null;
   isBusy?: boolean;
+  onResetDemo?: () => void;
 }
 
 /**
@@ -27,7 +29,10 @@ export function DemoVoiceModal({
   onSelectScenario,
   activeScenarioId,
   isBusy = false,
+  onResetDemo,
 }: DemoVoiceModalProps) {
+  const [isResetting, setIsResetting] = useState(false);
+
   if (!isOpen) return null;
 
   return (
@@ -52,12 +57,33 @@ export function DemoVoiceModal({
             </div>
           </div>
 
-          <button
-            onClick={onClose}
-            className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
-          >
-            <FontAwesomeIcon icon={faXmark} className="text-sm" />
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              disabled={isBusy || isResetting}
+              onClick={async () => {
+                try {
+                  setIsResetting(true);
+                  await mcpClient.triggerDataSeed();
+                  if (onResetDemo) onResetDemo();
+                } catch (err) {
+                  console.error('Reset error:', err);
+                } finally {
+                  setIsResetting(false);
+                }
+              }}
+              className="px-2.5 py-1 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-300 border border-purple-500/40 text-[11px] font-mono flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer disabled:opacity-50"
+              title="Reset Eleanor's Wallet to $0.00 and Amlodipine to 4 pills"
+            >
+              <span>{isResetting ? '⏳ Resetting...' : '↺ Reset Demo State'}</span>
+            </button>
+
+            <button
+              onClick={onClose}
+              className="w-8 h-8 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition-colors"
+            >
+              <FontAwesomeIcon icon={faXmark} className="text-sm" />
+            </button>
+          </div>
         </div>
 
         {/* SCENARIOS LIST */}

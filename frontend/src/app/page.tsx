@@ -732,6 +732,7 @@ export default function Home() {
       <DemoVoiceModal
         isOpen={isDemoVoiceModalOpen}
         onClose={() => setIsDemoVoiceModalOpen(false)}
+        onResetDemo={() => setRefreshTrigger((prev) => prev + 1)}
         onSelectScenario={async (scenario: MockVoiceScenario) => {
           await alexaAgent.simulateVoiceScenario(scenario);
         }}
